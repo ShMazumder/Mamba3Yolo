@@ -1,0 +1,30 @@
+{
+  "data": "synth",
+  "scale": "T",
+  "nc": 1,
+  "imgsz": 64,
+  "params": 7059798,
+  "mamba3_ref_blocks": 8,
+  "official_mamba3_kernels": false,
+  "scan": "parallel-chunked",
+  "epochs": 3,
+  "mAP50_init": 0.0,
+  "mAP50_final": 0.0,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 10.265970885753632,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 2,
+      "loss": 11.864305198192596,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 3,
+      "loss": 14.116973042488098,
+      "mAP50": 0.0
+    }
+  ]
+}

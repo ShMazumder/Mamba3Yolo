@@ -1,0 +1,65 @@
+{
+  "data": "synth",
+  "scale": "T",
+  "nc": 1,
+  "imgsz": 64,
+  "params": 7059798,
+  "mamba3_ref_blocks": 8,
+  "official_mamba3_kernels": false,
+  "scan": "parallel-chunked",
+  "epochs": 10,
+  "mAP50_init": 0.0,
+  "mAP50_final": 0.0,
+  "history": [
+    {
+      "epoch": 1,
+      "loss": 9.776055335998535,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 2,
+      "loss": 9.005326271057129,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 3,
+      "loss": 9.48660945892334,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 4,
+      "loss": 8.640809059143066,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 5,
+      "loss": 10.117700576782227,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 6,
+      "loss": 9.257740020751953,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 7,
+      "loss": 8.845786094665527,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 8,
+      "loss": 8.4204683303833,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 9,
+      "loss": 8.473057746887207,
+      "mAP50": 0.0
+    },
+    {
+      "epoch": 10,
+      "loss": 7.817539215087891,
+      "mAP50": 0.0
+    }
+  ]
+}

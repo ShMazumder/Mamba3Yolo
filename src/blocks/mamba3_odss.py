@@ -13,6 +13,11 @@ try:
 except ImportError:
     HAS_MAMBA3 = False
 
+# Faithful pure-PyTorch Mamba-3 selective SSM (real recurrence, complex/RoPE states).
+# Replaces the old gated-MLP Mamba3Reference as the reference/fallback path. Verified
+# on the parity state-tracking gate (scripts/validate_parity.py).
+from src.blocks.mamba3_ref import Mamba3RefSSM
+
 class DropPath(nn.Module):
     def __init__(self, drop_prob: float = 0.0):
         super().__init__()
@@ -71,12 +76,15 @@ class Mamba3Reference(nn.Module):
         return residual + self.scale * self.out_proj(y)
 
 class Mamba3SS2D(nn.Module):
-    def __init__(self, dim: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, drop_path: float = 0.0):
+    def __init__(self, dim: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, drop_path: float = 0.0, use_rope: bool = True, trapezoidal: bool = True):
         super().__init__()
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
         self.drop_path = DropPath(drop_path) if drop_path > 0 else nn.Identity()
-        self.ref = Mamba3Reference(d_model=dim, d_state=d_state, expand=expand, headdim=headdim)
+        # Real Mamba-3 SSM reference (verified on parity gate), not the old gated MLP.
+        # d_state forced even for the 2-D rotary blocks. use_rope/trapezoidal are the
+        # mechanism-ablation toggles (complex-state and trapezoidal discretization).
+        self.ref = Mamba3RefSSM(dim, d_state=d_state + (d_state % 2), expand=expand, headdim=headdim, use_rope=use_rope, trapezoidal=trapezoidal)
         self._use_official = False
         self.mamba = None
         if HAS_MAMBA3:
@@ -125,12 +133,33 @@ class Mamba3SS2D(nn.Module):
         x = self._four_dir_scan(x)
         return residual + self.drop_path(x)
 
+    @torch.no_grad()
+    def spatial_saliency(self, x: Tensor) -> Tensor:
+        """Intrinsic controllability-Gramian saliency map for this block. (B,H,W).
+        Runs the 4 scan directions and folds each token-saliency back to 2D."""
+        B, C, H, W = x.shape
+        x = x.permute(0, 2, 3, 1).contiguous()
+        x = self.norm(x)
+        x = x.permute(0, 3, 1, 2).contiguous()
+        seq_h = x.flatten(2).transpose(1, 2).contiguous()
+        seq_hf = torch.flip(seq_h, dims=[1]).contiguous()
+        seq_v = x.permute(0, 1, 3, 2).contiguous().flatten(2).transpose(1, 2).contiguous()
+        seq_vf = torch.flip(seq_v, dims=[1]).contiguous()
+        sal = self.ref.token_saliency if hasattr(self.ref, "token_saliency") else None
+        if sal is None:      # official-kernel path has no intrinsic saliency
+            return x.new_zeros(B, H, W)
+        mh = sal(seq_h).view(B, H, W)
+        mhf = torch.flip(sal(seq_hf), dims=[1]).view(B, H, W)
+        mv = sal(seq_v).view(B, W, H).permute(0, 2, 1)
+        mvf = torch.flip(sal(seq_vf), dims=[1]).view(B, W, H).permute(0, 2, 1)
+        return (mh + mhf + mv + mvf) * 0.25
+
 class Mamba3ODSSBlock(nn.Module):
-    def __init__(self, dim: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, drop_path: float = 0.0, mlp_ratio: float = 2.0):
+    def __init__(self, dim: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, drop_path: float = 0.0, mlp_ratio: float = 2.0, use_rope: bool = True, trapezoidal: bool = True):
         super().__init__()
         self.conv1 = nn.Sequential(nn.Conv2d(dim, dim, 1, bias=False), nn.BatchNorm2d(dim), nn.SiLU(inplace=True))
         self.ls = LSBlock(dim)
-        self.ss2d = Mamba3SS2D(dim=dim, d_state=d_state, expand=expand, headdim=headdim, is_mimo=is_mimo, mimo_rank=mimo_rank, drop_path=drop_path)
+        self.ss2d = Mamba3SS2D(dim=dim, d_state=d_state, expand=expand, headdim=headdim, is_mimo=is_mimo, mimo_rank=mimo_rank, drop_path=drop_path, use_rope=use_rope, trapezoidal=trapezoidal)
         self.rg = RGBlock(dim, expansion=mlp_ratio)
     def forward(self, x: Tensor) -> Tensor:
         x = self.conv1(x); x = self.ls(x); x = self.ss2d(x); x = self.rg(x)
@@ -140,3 +169,21 @@ def build_mamba3_odss(c1: int, c2: int, n: int = 1, **kwargs) -> nn.Module:
     if c1 != c2:
         return nn.Sequential(nn.Conv2d(c1, c2, 1, bias=False), nn.BatchNorm2d(c2), nn.SiLU(inplace=True), *[Mamba3ODSSBlock(c2, **kwargs) for _ in range(n)])
     return nn.Sequential(*[Mamba3ODSSBlock(c2, **kwargs) for _ in range(n)])
+
+
+class Mamba3ODSS(nn.Module):
+    """Ultralytics-compatible wrapper (c1, c2, n, ...) so a YOLO yaml can reference
+    `Mamba3ODSS` where it would use C3k2. Matches the channel+repeat calling
+    convention Ultralytics' parse_model uses for CSP blocks. Leaner defaults
+    (expand=1, mlp_ratio=1.0, d_state=32) keep the -s variant near ~12-13M."""
+
+    def __init__(self, c1: int, c2: int, n: int = 1, d_state: int = 32,
+                 expand: int = 1, mlp_ratio: float = 1.0,
+                 use_rope: bool = True, trapezoidal: bool = True):
+        super().__init__()
+        self.block = build_mamba3_odss(c1, c2, n=max(int(n), 1), d_state=d_state,
+                                       expand=expand, mlp_ratio=mlp_ratio,
+                                       use_rope=bool(use_rope), trapezoidal=bool(trapezoidal))
+
+    def forward(self, x: Tensor) -> Tensor:
+        return self.block(x)

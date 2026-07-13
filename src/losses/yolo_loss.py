@@ -56,11 +56,12 @@ class YOLOLoss(nn.Module):
     targets: (N, 6)  [batch_idx, cls, cx, cy, w, h]  (normalized 0-1)
     """
 
-    def __init__(self, nc: int = 9, reg_max: int = 16, box_w: float = 7.5, cls_w: float = 0.5, dfl_w: float = 1.5):
+    def __init__(self, nc: int = 9, reg_max: int = 16, box_w: float = 7.5, cls_w: float = 0.5, dfl_w: float = 1.5, imgsz: int = 640):
         super().__init__()
         self.nc = nc
         self.reg_max = reg_max
         self.no = nc + reg_max * 4
+        self.imgsz = imgsz
         self.box_w = box_w
         self.cls_w = cls_w
         self.dfl_w = dfl_w
@@ -79,7 +80,7 @@ class YOLOLoss(nn.Module):
 
         for pi, pred in enumerate(preds):
             B, C, H, W = pred.shape
-            stride = 640 // H   # approximate (imgsz=640)
+            stride = self.imgsz / H
             # reshape to (B, H, W, no)
             pred = pred.permute(0, 2, 3, 1).contiguous()  # B,H,W,no
             box_pred = pred[..., : self.reg_max * 4]
@@ -116,10 +117,10 @@ class YOLOLoss(nn.Module):
                     px = (gi + 0.5) / W
                     py = (gj + 0.5) / H
                     pred_xyxy = torch.stack([
-                        px - dist[0] * stride / 640,
-                        py - dist[1] * stride / 640,
-                        px + dist[2] * stride / 640,
-                        py + dist[3] * stride / 640,
+                        px - dist[0] * stride / self.imgsz,
+                        py - dist[1] * stride / self.imgsz,
+                        px + dist[2] * stride / self.imgsz,
+                        py + dist[3] * stride / self.imgsz,
                     ])
                     gt_xyxy = torch.stack([
                         cx - bw / 2, cy - bh / 2, cx + bw / 2, cy + bh / 2

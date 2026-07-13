@@ -41,7 +41,7 @@ backbone:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - Conv
@@ -56,7 +56,7 @@ backbone:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - Conv
@@ -71,7 +71,7 @@ backbone:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - Conv
@@ -86,7 +86,7 @@ backbone:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - SPPF
@@ -116,7 +116,7 @@ head:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - nn.Upsample
@@ -136,7 +136,7 @@ head:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - Conv
@@ -156,7 +156,7 @@ head:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - -1
   - 1
   - Conv
@@ -176,7 +176,7 @@ head:
     - 1
     - 1.0
     - true
-    - true
+    - false
 - - - 16
     - 19
     - 22

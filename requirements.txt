@@ -1,0 +1,54 @@
+# Mamba3Yolo - Core dependencies
+# Tested with Python 3.10 / 3.11 and CUDA 12.1+
+
+# ---------- Deep Learning ----------
+torch>=2.3.0
+torchvision>=0.18.0
+torchaudio>=2.3.0
+
+# ---------- Mamba-3 kernels (critical for speed & accuracy) ----------
+# Install after PyTorch:
+#   pip install mamba-ssm
+# or build from source: https://github.com/state-spaces/mamba
+mamba-ssm>=2.2.0; platform_system != "Darwin"   # CUDA only
+causal-conv1d>=1.4.0; platform_system != "Darwin"
+
+# ---------- Vision & Detection ----------
+ultralytics>=8.2.0          # optional, for full Ultralytics integration
+timm>=1.0.0
+einops>=0.7.0
+thop>=0.1.1                 # FLOPs counting
+opencv-python-headless>=4.8.0
+Pillow>=10.0.0
+
+# ---------- Metrics & Evaluation ----------
+torchmetrics[detection]>=1.4.0
+pycocotools>=2.0.7          # optional but recommended for COCO mAP
+numpy>=1.24.0
+pandas>=2.0.0
+scipy>=1.11.0
+
+# ---------- Explainability & Visualization ----------
+matplotlib>=3.8.0
+seaborn>=0.13.0
+grad-cam>=1.5.0             # optional (we ship our own Grad-CAM++)
+
+# ---------- Quantization & Export ----------
+onnx>=1.16.0
+onnxruntime-gpu>=1.18.0; platform_system != "Darwin"
+# TensorRT is installed via NVIDIA system packages / JetPack
+
+# ---------- Training utilities ----------
+tqdm>=4.66.0
+pyyaml>=6.0
+tensorboard>=2.15.0
+# wandb>=0.17.0             # optional experiment tracking
+
+# ---------- Development / Notebooks ----------
+jupyter>=1.0.0
+ipywidgets>=8.1.0
+nbformat>=5.10.0
+
+# ---------- Optional medical imaging ----------
+# SimpleITK>=2.3.0
+# pydicom>=2.4.0

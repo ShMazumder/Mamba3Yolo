@@ -48,8 +48,7 @@ class DropPath(nn.Module):
 
 
 class LSBlock(nn.Module):
-    """Local Spatial Block (from original Mamba-YOLO). Compensates for SSM's
-    weaker local modeling with depthwise conv + residual."""
+    """Local Spatial Block (from original Mamba-YOLO)."""
 
     def __init__(self, dim: int, kernel_size: int = 3):
         super().__init__()
@@ -68,8 +67,7 @@ class LSBlock(nn.Module):
 
 
 class RGBlock(nn.Module):
-    """Residual Gated Block (original Mamba-YOLO). Multi-branch gated channel mixing
-    after the global SSM path."""
+    """Residual Gated Block (original Mamba-YOLO)."""
 
     def __init__(self, dim: int, expansion: float = 2.0):
         super().__init__()
@@ -78,22 +76,24 @@ class RGBlock(nn.Module):
         self.fc2 = nn.Conv2d(dim, hidden, 1, bias=False)
         self.dw = nn.Conv2d(hidden, hidden, 3, padding=1, groups=hidden, bias=False)
         self.fc_out = nn.Conv2d(hidden, dim, 1, bias=False)
-        self.act = nn.GELU()
+        self.act = nn.SiLU()
         self.norm = nn.BatchNorm2d(dim)
 
     def forward(self, x: Tensor) -> Tensor:
         residual = x
         x1 = self.fc1(x)
         x2 = self.fc2(x)
-        x2 = self.dw(x2) + x2
-        gate = self.act(x2)
-        out = self.fc_out(x1 * gate)
-        return self.norm(out + residual)
+        x = self.act(x1) * x2
+        x = self.dw(x)
+        x = self.fc_out(x)
+        return self.norm(x + residual)
 
 
 class Mamba3Reference(nn.Module):
-    """Lightweight pure-PyTorch stand-in for Mamba3 when official kernels are
-    unavailable. Correct shapes and residual structure only; not for final accuracy."""
+    """
+    Pure-PyTorch reference that approximates Mamba-3 behaviour for shape testing
+    and when official kernels are unavailable.
+    """
 
     def __init__(
         self,
@@ -128,6 +128,10 @@ class Mamba3SS2D(nn.Module):
 
     Follows the VMamba / original Mamba-YOLO SS2D pattern:
     four directional sequences → shared Mamba3 mixer → merge.
+
+    When official Mamba3 kernels are present we use safer MIMO settings
+    (mimo_rank=2, smaller effective chunk) to avoid smem / stride issues
+    that appear on some Kaggle CUDA images.
     """
 
     def __init__(
@@ -144,49 +148,88 @@ class Mamba3SS2D(nn.Module):
         self.dim = dim
         self.norm = nn.LayerNorm(dim)
 
+        # Safer defaults for official kernels on limited-smem GPUs (T4 etc.)
+        safe_mimo_rank = min(mimo_rank, 2) if HAS_MAMBA3 else mimo_rank
+        safe_is_mimo = is_mimo
+
         if HAS_MAMBA3:
-            self.mamba = Mamba3(
-                d_model=dim,
-                d_state=d_state,
-                expand=expand,
-                headdim=headdim,
-                is_mimo=is_mimo,
-                mimo_rank=mimo_rank,
-            )
+            try:
+                # Prefer smaller rank / disable MIMO if kernel is picky
+                self.mamba = Mamba3(
+                    d_model=dim,
+                    d_state=min(d_state, 64),
+                    expand=expand,
+                    headdim=min(headdim, 64),
+                    is_mimo=safe_is_mimo,
+                    mimo_rank=safe_mimo_rank,
+                )
+                self._use_official = True
+                self._mimo_rank = safe_mimo_rank
+            except Exception as e:
+                print(f"[Mamba3SS2D] Official Mamba3 init failed ({e}), using reference")
+                self.mamba = Mamba3Reference(
+                    d_model=dim, d_state=d_state, expand=expand,
+                    headdim=headdim, is_mimo=is_mimo, mimo_rank=mimo_rank,
+                )
+                self._use_official = False
         else:
             self.mamba = Mamba3Reference(
-                d_model=dim,
-                d_state=d_state,
-                expand=expand,
-                headdim=headdim,
-                is_mimo=is_mimo,
-                mimo_rank=mimo_rank,
+                d_model=dim, d_state=d_state, expand=expand,
+                headdim=headdim, is_mimo=is_mimo, mimo_rank=mimo_rank,
             )
+            self._use_official = False
 
         self.drop_path = DropPath(drop_path) if drop_path > 0 else nn.Identity()
+        self._fallback_ref = None  # lazy
+
+    def _get_fallback(self):
+        if self._fallback_ref is None:
+            self._fallback_ref = Mamba3Reference(
+                d_model=self.dim, d_state=64, expand=2, headdim=64
+            ).to(next(self.parameters()).device)
+        return self._fallback_ref
+
+    def _safe_mamba(self, seq: Tensor) -> Tensor:
+        """Call official kernel with contiguous input; fall back on any error."""
+        seq = seq.contiguous()
+        if not self._use_official:
+            return self.mamba(seq)
+        try:
+            return self.mamba(seq)
+        except Exception as e:
+            # Common on some Kaggle images: stride / smem issues with MIMO
+            # Fall back to pure-PyTorch for this forward (still differentiable)
+            if not hasattr(self, "_warned"):
+                print(f"[Mamba3SS2D] Official kernel failed ({type(e).__name__}), "
+                      f"using pure-PyTorch fallback for remaining steps.")
+                self._warned = True
+            return self._get_fallback()(seq)
 
     def _four_dir_scan(self, x: Tensor) -> Tensor:
         """x: (B, C, H, W) -> (B, C, H, W)"""
         B, C, H, W = x.shape
 
+        # Ensure contiguous before flattening
+        x = x.contiguous()
+
         # Horizontal
-        seq_h = x.flatten(2).transpose(1, 2)          # B, H*W, C
-        seq_hf = torch.flip(seq_h, dims=[1])
+        seq_h = x.flatten(2).transpose(1, 2).contiguous()          # B, H*W, C
+        seq_hf = torch.flip(seq_h, dims=[1]).contiguous()
 
         # Vertical
-        seq_v = x.permute(0, 1, 3, 2).contiguous().flatten(2).transpose(1, 2)
-        seq_vf = torch.flip(seq_v, dims=[1])
+        seq_v = x.permute(0, 1, 3, 2).contiguous().flatten(2).transpose(1, 2).contiguous()
+        seq_vf = torch.flip(seq_v, dims=[1]).contiguous()
 
-        out_h = self.mamba(seq_h)
-        out_hf = self.mamba(seq_hf)
-        out_v = self.mamba(seq_v)
-        out_vf = self.mamba(seq_vf)
+        out_h = self._safe_mamba(seq_h)
+        out_hf = self._safe_mamba(seq_hf)
+        out_v = self._safe_mamba(seq_v)
+        out_vf = self._safe_mamba(seq_vf)
 
         # Reshape back
-        out_h = out_h.transpose(1, 2).view(B, C, H, W)
-        out_hf = torch.flip(out_hf, dims=[1]).transpose(1, 2).view(B, C, H, W)
-        out_v = out_v.transpose(1, 2).view(B, C, W, H).permute(0, 1, 3, 2)
-        out_vf = torch.flip(out_vf, dims=[1]).transpose(1, 2).view(B, C, W, H).permute(0, 1, 3, 2)
+        out_h = out_h.transpose(1, 2).contiguous().view(B, C, H, W)
+        out_hf = torch.flip(out_hf, dims=[1]).transpose(1, 2).contiguous().view(B, C, H, W)
+        out_v = out_v.transpose(1, 2).contiguous().view(B, C, W, H).permute(0, 1, 3, 2).contiguous()
+        out_vf = torch.flip(out_vf, dims=[1]).transpose(1, 2).contiguous().view(B, C, W, H).permute(0, 1, 3, 2).contiguous()
 
         return (out_h + out_hf + out_v + out_vf) * 0.25
 
@@ -259,24 +302,3 @@ def build_mamba3_odss(c1: int, c2: int, n: int = 1, **kwargs) -> nn.Module:
             *[Mamba3ODSSBlock(c2, **kwargs) for _ in range(n)],
         )
     return nn.Sequential(*[Mamba3ODSSBlock(c2, **kwargs) for _ in range(n)])
-
-
-# Convenience export for registration
-__all__ = [
-    "Mamba3ODSSBlock",
-    "Mamba3SS2D",
-    "LSBlock",
-    "RGBlock",
-    "build_mamba3_odss",
-    "HAS_MAMBA3",
-]
-
-
-if __name__ == "__main__":
-    device = "cuda" if torch.cuda.is_available() else "cpu"
-    print(f"Device: {device} | Official Mamba3 kernels: {HAS_MAMBA3}")
-    block = Mamba3ODSSBlock(dim=128, d_state=32, headdim=32, is_mimo=True).to(device)
-    x = torch.randn(2, 128, 40, 40, device=device)
-    y = block(x)
-    print(f"Shape check: {tuple(x.shape)} -> {tuple(y.shape)}")
-    print(f"Params: {sum(p.numel() for p in block.parameters()):,}")

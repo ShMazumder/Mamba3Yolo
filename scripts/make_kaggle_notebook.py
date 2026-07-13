@@ -43,9 +43,15 @@ This notebook is self-contained. It clones the repo, then overwrites the core fi
 
 > Honesty: report only numbers you measure. `official_mamba3_kernels=False` (no released kernel — the pure-PyTorch verified core runs). FLOPs are ~3× the baseline; state it."""))
 
-cells.append(md("## 0. Environment"))
+cells.append(md(
+"""## 0. Environment
+
+**Run this install cell FIRST, before importing anything.** It floors `numpy>=2` so the
+Ultralytics install can't leave a mixed numpy 1.x/2.x state (the `numpy.dtype size changed,
+Expected 96 got 88` ABI error). If you still hit that error, do **Run → Restart & Run All**
+once — Kaggle needs a kernel restart to load the reinstalled numpy."""))
+cells.append(code('!pip install -q "numpy>=2.0" ultralytics==8.3.0 pymupdf'))
 cells.append(code("!nvidia-smi -L\nimport torch; print('torch', torch.__version__, '| cuda', torch.cuda.is_available())"))
-cells.append(code("!pip install -q ultralytics==8.3.0 pymupdf"))
 cells.append(code(
 """import os
 if not os.path.exists('Mamba3Yolo'):

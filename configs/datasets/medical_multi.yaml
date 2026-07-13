@@ -1,0 +1,48 @@
+# Multi-domain medical object detection config
+# Combines common public medical detection / lesion datasets.
+# Paths are placeholders – point them to your local downloads.
+
+# Supported domains (examples):
+# - Polyp detection (Kvasir-SEG, CVC-ClinicDB, ETIS)
+# - Blood cell detection (BCCD)
+# - Brain tumor (Br35H or BraTS detection style)
+# - Diabetic retinopathy lesions (IDRiD, DDR – convert to detection boxes if needed)
+# - Optional: COCO for joint training / domain generalization
+
+path: /data/medical_detection   # root
+train: 
+  - images/polyp_train
+  - images/bccd_train
+  - images/br35h_train
+  # - images/idrid_lesion_train   # if you convert DR lesions to boxes
+val:
+  - images/polyp_val
+  - images/bccd_val
+  - images/br35h_val
+
+# Class names (unified multi-domain; map original labels to these)
+names:
+  0: polyp
+  1: cell_rbc
+  2: cell_wbc
+  3: cell_platelet
+  4: tumor
+  5: microaneurysm
+  6: hemorrhage
+  7: hard_exudate
+  8: soft_exudate
+  # add more as needed
+
+# Domain tags for multi-domain loss / adaptation (optional)
+domains:
+  - polyp
+  - blood_cell
+  - brain_tumor
+  # - dr_lesion
+
+# Recommended training:
+# - Joint training with domain-balanced sampling
+# - Or staged: pretrain on COCO → fine-tune multi-medical
+# - Use domain-adaptive loss or simple multi-task if labels overlap
+
+nc: 9   # adjust to actual number of classes after mapping

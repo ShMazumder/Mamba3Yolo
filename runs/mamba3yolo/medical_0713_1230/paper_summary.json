@@ -1,0 +1,14 @@
+{
+  "model": "Mamba3Yolo-T",
+  "params": 8066101,
+  "official_mamba3_kernels": true,
+  "primary_dataset": "medical",
+  "real_data": true,
+  "nc": 9,
+  "epochs": 50,
+  "final_loss": 0.00010244185185521408,
+  "best_val_proxy": 0.005838450215898254,
+  "best_epoch": 37,
+  "device": "cuda",
+  "save_dir": "/kaggle/working/Mamba3Yolo/runs/mamba3yolo/medical_0713_1230"
+}

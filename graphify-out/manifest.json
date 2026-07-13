@@ -1,0 +1,147 @@
+{
+  "runs/mamba3yolo/medical_0713_1230/history.json": {
+    "mtime": 1783961297.3890388,
+    "ast_hash": "1baa8312eac2b4b1d52e598b7252bde6",
+    "semantic_hash": "1baa8312eac2b4b1d52e598b7252bde6"
+  },
+  "runs/mamba3yolo/medical_0713_1230/paper_summary.json": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "c9ac05b10262dc0778a96b186f2dc12a",
+    "semantic_hash": "c9ac05b10262dc0778a96b186f2dc12a"
+  },
+  "scripts/generate_xai_figures.py": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "d3ac6a8d3e72bf6af259146e8ace9ce8",
+    "semantic_hash": "d3ac6a8d3e72bf6af259146e8ace9ce8"
+  },
+  "scripts/measure_latency.py": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "5e555da7775a15c0a0de5c1096322728",
+    "semantic_hash": "5e555da7775a15c0a0de5c1096322728"
+  },
+  "scripts/train.py": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "74c125174964b0c304026bd95d514753",
+    "semantic_hash": "74c125174964b0c304026bd95d514753"
+  },
+  "src/__init__.py": {
+    "mtime": 1783961297.4794824,
+    "ast_hash": "fbf865f9b5023a4009897bbf5d968cf0",
+    "semantic_hash": "fbf865f9b5023a4009897bbf5d968cf0"
+  },
+  "src/blocks/mamba3_odss.py": {
+    "mtime": 1783961297.4794824,
+    "ast_hash": "66e0e93cf0059ae0387bd6428c2a5f1e",
+    "semantic_hash": "66e0e93cf0059ae0387bd6428c2a5f1e"
+  },
+  "src/losses/yolo_loss.py": {
+    "mtime": 1783961297.4794824,
+    "ast_hash": "f153b6f720c6ac0f687d7e6a3163be97",
+    "semantic_hash": "f153b6f720c6ac0f687d7e6a3163be97"
+  },
+  "src/metrics/coco_eval.py": {
+    "mtime": 1783961297.4806845,
+    "ast_hash": "d2db68b7d54d6bca3bae3a49a54f426e",
+    "semantic_hash": "d2db68b7d54d6bca3bae3a49a54f426e"
+  },
+  "src/metrics/map_eval.py": {
+    "mtime": 1783961297.4806845,
+    "ast_hash": "b5838d48ff02fdf3a42d4edb76c49491",
+    "semantic_hash": "b5838d48ff02fdf3a42d4edb76c49491"
+  },
+  "src/models/mamba3yolo.py": {
+    "mtime": 1783961297.4806845,
+    "ast_hash": "1d4b6527dc5fc3324c7f7bf6b143347e",
+    "semantic_hash": "1d4b6527dc5fc3324c7f7bf6b143347e"
+  },
+  "src/quant/ptq.py": {
+    "mtime": 1783961297.4806845,
+    "ast_hash": "cfcbbdf2c382c6f1e334d178ef0c3b38",
+    "semantic_hash": "cfcbbdf2c382c6f1e334d178ef0c3b38"
+  },
+  "src/xai/gradcam.py": {
+    "mtime": 1783961297.4806845,
+    "ast_hash": "734b88edc333d251864a7a1a73fb1970",
+    "semantic_hash": "734b88edc333d251864a7a1a73fb1970"
+  },
+  "README.md": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "81b9f70691e1a9eba6bd88af1c6bd2de",
+    "semantic_hash": "81b9f70691e1a9eba6bd88af1c6bd2de"
+  },
+  "configs/datasets/medical_multi.yaml": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "651c10793d8d4cc1f2e062eb6189545d",
+    "semantic_hash": "651c10793d8d4cc1f2e062eb6189545d"
+  },
+  "configs/models/Mamba3Yolo-T.yaml": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "72202e8101cd06340fced1b49191afa4",
+    "semantic_hash": "72202e8101cd06340fced1b49191afa4"
+  },
+  "docs/CAMERA_READY_CHECKLIST.md": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "fcffce14c6e6447d4a082bd1d620e6c8",
+    "semantic_hash": "fcffce14c6e6447d4a082bd1d620e6c8"
+  },
+  "docs/DATASETS_FOR_PAPER.md": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "942dc30a1db392f0dc08cced753b1e89",
+    "semantic_hash": "942dc30a1db392f0dc08cced753b1e89"
+  },
+  "docs/INTEGRATION.md": {
+    "mtime": 1783961297.2922108,
+    "ast_hash": "58baf4277ab7d200fba8fa0a952bd6df",
+    "semantic_hash": "58baf4277ab7d200fba8fa0a952bd6df"
+  },
+  "docs/METHODS_SECTION.md": {
+    "mtime": 1783961297.2922108,
+    "ast_hash": "1da4741954fe3796c82d75cbd1a58b06",
+    "semantic_hash": "1da4741954fe3796c82d75cbd1a58b06"
+  },
+  "docs/RESEARCH_PLAN.md": {
+    "mtime": 1783961297.2922108,
+    "ast_hash": "0006c02d43695475805b21634aafeb76",
+    "semantic_hash": "0006c02d43695475805b21634aafeb76"
+  },
+  "docs/latex/DATASETS_FOR_PAPER.md": {
+    "mtime": 1783961297.2922108,
+    "ast_hash": "942dc30a1db392f0dc08cced753b1e89",
+    "semantic_hash": "942dc30a1db392f0dc08cced753b1e89"
+  },
+  "docs/latex/README_OVERLEAF.md": {
+    "mtime": 1783961297.2922108,
+    "ast_hash": "ecfb42dba4dc16c4ea32c3abd94ed4e1",
+    "semantic_hash": "ecfb42dba4dc16c4ea32c3abd94ed4e1"
+  },
+  "requirements.txt": {
+    "mtime": 1783961297.2940218,
+    "ast_hash": "e4ed4c2c53870a0e0bb1b75e1f3e517d",
+    "semantic_hash": "e4ed4c2c53870a0e0bb1b75e1f3e517d"
+  },
+  "docs/CAMERA_READY_CHECKLIST.pdf": {
+    "mtime": 1783961297.2898996,
+    "ast_hash": "65594de153571aeb27a7dd5b9a236e3e",
+    "semantic_hash": "65594de153571aeb27a7dd5b9a236e3e"
+  },
+  "docs/latex/figures/architecture.pdf": {
+    "mtime": 1783961297.2940218,
+    "ast_hash": "67b07213290bbbd8516a5e260b591bc8",
+    "semantic_hash": "67b07213290bbbd8516a5e260b591bc8"
+  },
+  "docs/latex/supplementary.pdf": {
+    "mtime": 1783961297.2940218,
+    "ast_hash": "679563852cf618a96d9bc1118ba274dc",
+    "semantic_hash": "679563852cf618a96d9bc1118ba274dc"
+  },
+  "runs/mamba3yolo/medical_0713_1230/training_curves.pdf": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "dc93644ebfb921d6a16e2572cc1967fa",
+    "semantic_hash": "dc93644ebfb921d6a16e2572cc1967fa"
+  },
+  "runs/mamba3yolo/medical_0713_1230/training_curves.png": {
+    "mtime": 1783961297.4748929,
+    "ast_hash": "6d189016d8678f9ef432f1072b248d2c",
+    "semantic_hash": "6d189016d8678f9ef432f1072b248d2c"
+  }
+}

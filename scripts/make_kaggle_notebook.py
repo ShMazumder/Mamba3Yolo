@@ -54,7 +54,9 @@ it keeps Kaggle's numpy 2.x untouched, and ultralytics 8.3.0 runs fine on it.
 > If you already ran a bad install this session (numpy shows 1.26.4 below), do
 > **Run → Factory reset** first to restore the clean numpy-2.x image, then run this cell."""))
 cells.append(code(
-"""import importlib, subprocess, sys
+"""import os
+os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"   # reduce CUDA fragmentation
+import importlib, subprocess, sys
 def have(m):
     try:
         importlib.import_module(m); return True
@@ -96,7 +98,7 @@ from src.blocks.mamba3_ref import Mamba3RefSSM
 register()
 y = YOLO(make_yaml('s'))
 print('Mamba blocks before train:', sum(isinstance(m, Mamba3RefSSM) for m in y.model.modules()))
-y.train(data='coco8.yaml', epochs=3, imgsz=320, batch=8, device=0, workers=2,
+y.train(data='coco8.yaml', epochs=3, imgsz=256, batch=2, device=0, workers=2,
         plots=False, verbose=False, exist_ok=True, name='coco8_smoke')
 print('Mamba blocks after train :', sum(isinstance(m, Mamba3RefSSM) for m in y.model.modules()))"""))
 
@@ -105,15 +107,16 @@ cells.append(md(
 
 Same base (YOLO11-s), same data/schedule — **only the mixer differs**.
 
-**Kaggle note:** this model is ~69 GFLOPs (the O(L) scan is heavy). Full COCO/300 epochs will not
-fit a single Kaggle session. Defaults below use `coco128` for a *real but small* demo that produces
-genuine numbers. For paper numbers, point `DATA` at your full dataset and raise `EPOCHS` on adequate
-compute (or resume across sessions)."""))
+**Kaggle note:** this model is ~69 GFLOPs and **memory-heavy** — the SSM stores a state trajectory
+per token (gradient-checkpointed to help, but still large). On a 14 GB T4 keep `BATCH` small
+(2–4) and `IMGSZ` ≤ 384. OOM? halve `BATCH`, then drop `IMGSZ`. Full COCO/300 epochs won't fit one
+Kaggle session — defaults use `coco128` for a *real but small* demo. For paper numbers, use your full
+dataset on a bigger GPU (A100/H100) or resume across sessions."""))
 cells.append(code(
 """DATA   = 'coco128.yaml'   # <-- your data.yaml for real numbers (COCO / medical)
 EPOCHS = 60
-IMGSZ  = 512              # 640 for paper; 512 is faster on Kaggle T4
-BATCH  = 16
+IMGSZ  = 384              # 640 for paper on a big GPU; 384 fits the T4
+BATCH  = 4               # T4-safe; raise on A100/H100
 DEV    = 0"""))
 
 cells.append(md("### 4a. Baseline — stock YOLO11-s (C3k2 mixer)"))

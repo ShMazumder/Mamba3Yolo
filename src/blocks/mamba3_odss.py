@@ -5,6 +5,7 @@ from __future__ import annotations
 from typing import Optional
 import torch
 import torch.nn as nn
+import torch.utils.checkpoint as _ckpt
 from torch import Tensor
 
 try:
@@ -161,8 +162,14 @@ class Mamba3ODSSBlock(nn.Module):
         self.ls = LSBlock(dim)
         self.ss2d = Mamba3SS2D(dim=dim, d_state=d_state, expand=expand, headdim=headdim, is_mimo=is_mimo, mimo_rank=mimo_rank, drop_path=drop_path, use_rope=use_rope, trapezoidal=trapezoidal)
         self.rg = RGBlock(dim, expansion=mlp_ratio)
+        self.use_checkpoint = True   # recompute the SSM scan in backward -> big memory saving
     def forward(self, x: Tensor) -> Tensor:
-        x = self.conv1(x); x = self.ls(x); x = self.ss2d(x); x = self.rg(x)
+        x = self.conv1(x); x = self.ls(x)
+        if self.use_checkpoint and self.training and x.requires_grad:
+            x = _ckpt.checkpoint(self.ss2d, x, use_reentrant=False)  # don't store scan trajectory
+        else:
+            x = self.ss2d(x)
+        x = self.rg(x)
         return x
 
 def build_mamba3_odss(c1: int, c2: int, n: int = 1, **kwargs) -> nn.Module:

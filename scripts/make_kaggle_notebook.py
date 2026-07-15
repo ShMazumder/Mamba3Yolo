@@ -127,19 +127,28 @@ Same base (YOLO11-s), same data/schedule — **only the mixer differs**.
 per token (gradient-checkpointed to help, but still large). On a 14 GB T4 keep `BATCH` small
 (2–4) and `IMGSZ` ≤ 384. OOM? halve `BATCH`, then drop `IMGSZ`. Full COCO/300 epochs won't fit one
 Kaggle session — defaults use `coco128` for a *real but small* demo. For paper numbers, use your full
-dataset on a bigger GPU (A100/H100) or resume across sessions."""))
+dataset on a bigger GPU (A100/H100) or resume across sessions.
+
+**Optimizer matters:** with a small batch, Ultralytics' `optimizer=auto` picks a tiny lr (~1e-4)
+and *nothing* learns (baseline included). We force `AdamW, lr0=2e-3` — robust across the mixed
+conv+SSM params. These are trained **from scratch** (the Mamba model has no pretrained weights),
+so `coco128` (128 imgs, train==val) only shows the pipeline *learns*; it is NOT a paper number —
+use a real dataset with enough data for that."""))
 cells.append(code(
 """DATA   = 'coco128.yaml'   # <-- your data.yaml for real numbers (COCO / medical)
-EPOCHS = 60
+EPOCHS = 100
 IMGSZ  = 384              # 640 for paper on a big GPU; 384 fits the T4
 BATCH  = 4               # T4-safe; raise on A100/H100
-DEV    = 0"""))
+DEV    = 0
+# shared, so baseline and ours differ ONLY in the mixer
+TKW = dict(optimizer='AdamW', lr0=2e-3, warmup_epochs=5, cos_lr=True,
+           plots=False, exist_ok=True)"""))
 
 cells.append(md("### 4a. Baseline — stock YOLO11-s (C3k2 mixer)"))
 cells.append(code(
 """from ultralytics import YOLO
 YOLO('yolo11s.yaml').train(data=DATA, epochs=EPOCHS, imgsz=IMGSZ, batch=BATCH, device=DEV,
-                           cos_lr=True, plots=False, exist_ok=True, name='yolo11s_base')"""))
+                           name='yolo11s_base', **TKW)"""))
 
 cells.append(md("### 4b. Ours + ablations — Mamba-3 full / no-RoPE / Euler(=Mamba-2)"))
 cells.append(code(
@@ -154,7 +163,7 @@ variants = {
 for name, ycfg in variants.items():
     print('=== training', name, '===')
     YOLO(ycfg).train(data=DATA, epochs=EPOCHS, imgsz=IMGSZ, batch=BATCH, device=DEV,
-                     cos_lr=True, plots=False, exist_ok=True, name=name)"""))
+                     name=name, **TKW)"""))
 
 cells.append(md("## 5. Results table\nPulls final val metrics from each run's `results.csv`."))
 cells.append(code(

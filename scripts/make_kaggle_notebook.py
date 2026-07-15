@@ -46,21 +46,26 @@ This notebook is self-contained. It clones the repo, then overwrites the core fi
 cells.append(md(
 """## 0. Environment
 
-**Run this cell FIRST — before importing torch/numpy anywhere.** It installs `ultralytics==8.3.0`
-only if missing, and **does not touch numpy** (forcing a numpy version is what caused the
-`numpy.dtype size changed, Expected 96 got 88` ABI error last time). Installing before any
-`import torch` keeps numpy consistent, so the ABI error does not occur. If you ever see it
-anyway, do **Run → Restart & Run All** once; never pip-install numpy."""))
+**Run this cell FIRST.** `ultralytics==8.3.0` pins `numpy<2`, but Kaggle's image is built for
+numpy 2.x — a normal install downgrades numpy to 1.26.4 and ABI-breaks cv2/tifffile/shap
+(`numpy.dtype size changed, Expected 96 got 88`). So we install ultralytics with **`--no-deps`**:
+it keeps Kaggle's numpy 2.x untouched, and ultralytics 8.3.0 runs fine on it.
+
+> If you already ran a bad install this session (numpy shows 1.26.4 below), do
+> **Run → Factory reset** first to restore the clean numpy-2.x image, then run this cell."""))
 cells.append(code(
 """import importlib, subprocess, sys
-def ensure(mod, pip_name=None):
+def have(m):
     try:
-        return importlib.import_module(mod)
-    except ImportError:
-        subprocess.run([sys.executable, "-m", "pip", "install", "-q", pip_name or mod], check=False)
-        return importlib.import_module(mod)
-ul = ensure("ultralytics", "ultralytics==8.3.0")   # install 8.3.0 only if missing (no numpy pin)
-print("ultralytics", ul.__version__)"""))
+        importlib.import_module(m); return True
+    except Exception:
+        return False
+if not have("ultralytics"):
+    # --no-deps: do NOT let pip downgrade Kaggle's numpy 2.x (that breaks cv2's ABI).
+    subprocess.run([sys.executable, "-m", "pip", "install", "-q", "--no-deps",
+                    "ultralytics==8.3.0", "ultralytics-thop"], check=False)
+import ultralytics, numpy, cv2
+print("ultralytics", ultralytics.__version__, "| numpy", numpy.__version__, "| cv2", cv2.__version__)"""))
 cells.append(code("!nvidia-smi -L\nimport torch; print('torch', torch.__version__, '| cuda', torch.cuda.is_available())"))
 cells.append(code(
 """import os

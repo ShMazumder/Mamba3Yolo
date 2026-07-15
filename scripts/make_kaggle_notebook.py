@@ -56,6 +56,7 @@ it keeps Kaggle's numpy 2.x untouched, and ultralytics 8.3.0 runs fine on it.
 cells.append(code(
 """import os
 os.environ["PYTORCH_CUDA_ALLOC_CONF"] = "expandable_segments:True"   # reduce CUDA fragmentation
+os.environ["WANDB_MODE"] = "disabled"                                # skip the interactive W&B prompt
 import importlib, subprocess, sys
 def have(m):
     try:
@@ -81,7 +82,19 @@ cells.append(md("## 1. Patch in the verified source files\n"
                 "The repo on GitHub predates this work; these cells write the real, verified code."))
 for rel in EMBED:
     cells.append(writefile(rel))
-cells.append(code("import sys; sys.path.insert(0, os.getcwd())\nprint('patched files in place')"))
+cells.append(code(
+"""import sys; sys.path.insert(0, os.getcwd())
+
+# Ultralytics 8.3.0's Ray Tune callback is incompatible with Kaggle's ray version
+# (crashes at epoch end: ray.train._internal.session._get_session missing). Neutralize it.
+try:
+    import ultralytics.utils.callbacks.raytune as _rt
+    if getattr(_rt, "callbacks", None):
+        _rt.callbacks = {k: (lambda *a, **kw: None) for k in _rt.callbacks}
+        print("disabled broken Ray Tune callback")
+except Exception as e:
+    print("ray patch skipped:", e)
+print('patched files in place')"""))
 
 cells.append(md("## 2. Honesty gate — parity / state-tracking\n"
                 "Complex (RoPE) state must solve running-parity (~1.0); the real-valued control must fail (~0.5). "

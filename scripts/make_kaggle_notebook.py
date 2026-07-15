@@ -46,11 +46,21 @@ This notebook is self-contained. It clones the repo, then overwrites the core fi
 cells.append(md(
 """## 0. Environment
 
-**Run this install cell FIRST, before importing anything.** It floors `numpy>=2` so the
-Ultralytics install can't leave a mixed numpy 1.x/2.x state (the `numpy.dtype size changed,
-Expected 96 got 88` ABI error). If you still hit that error, do **Run → Restart & Run All**
-once — Kaggle needs a kernel restart to load the reinstalled numpy."""))
-cells.append(code('!pip install -q "numpy>=2.0" ultralytics==8.3.0 pymupdf'))
+**Run this cell FIRST — before importing torch/numpy anywhere.** It installs `ultralytics==8.3.0`
+only if missing, and **does not touch numpy** (forcing a numpy version is what caused the
+`numpy.dtype size changed, Expected 96 got 88` ABI error last time). Installing before any
+`import torch` keeps numpy consistent, so the ABI error does not occur. If you ever see it
+anyway, do **Run → Restart & Run All** once; never pip-install numpy."""))
+cells.append(code(
+"""import importlib, subprocess, sys
+def ensure(mod, pip_name=None):
+    try:
+        return importlib.import_module(mod)
+    except ImportError:
+        subprocess.run([sys.executable, "-m", "pip", "install", "-q", pip_name or mod], check=False)
+        return importlib.import_module(mod)
+ul = ensure("ultralytics", "ultralytics==8.3.0")   # install 8.3.0 only if missing (no numpy pin)
+print("ultralytics", ul.__version__)"""))
 cells.append(code("!nvidia-smi -L\nimport torch; print('torch', torch.__version__, '| cuda', torch.cuda.is_available())"))
 cells.append(code(
 """import os

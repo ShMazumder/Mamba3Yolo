@@ -85,15 +85,18 @@ for rel in EMBED:
 cells.append(code(
 """import sys; sys.path.insert(0, os.getcwd())
 
-# Ultralytics 8.3.0's Ray Tune callback is incompatible with Kaggle's ray version
-# (crashes at epoch end: ray.train._internal.session._get_session missing). Neutralize it.
-try:
-    import ultralytics.utils.callbacks.raytune as _rt
-    if getattr(_rt, "callbacks", None):
-        _rt.callbacks = {k: (lambda *a, **kw: None) for k in _rt.callbacks}
-        print("disabled broken Ray Tune callback")
-except Exception as e:
-    print("ray patch skipped:", e)
+# Neutralize ALL optional third-party logger callbacks in ultralytics 8.3.0 -- each is a
+# version-mismatch landmine on Kaggle (ray: _get_session; wandb: curves_results; etc.).
+# We don't need any of them; metrics are read from results.csv.
+import importlib as _il
+for _m in ("raytune", "wb", "tensorboard", "mlflow", "comet", "dvc", "neptune", "clearml", "hub"):
+    try:
+        _mod = _il.import_module(f"ultralytics.utils.callbacks.{_m}")
+        if getattr(_mod, "callbacks", None):
+            _mod.callbacks = {k: (lambda *a, **kw: None) for k in _mod.callbacks}
+    except Exception:
+        pass
+print("disabled optional logger callbacks")
 print('patched files in place')"""))
 
 cells.append(md("## 2. Honesty gate — parity / state-tracking\n"

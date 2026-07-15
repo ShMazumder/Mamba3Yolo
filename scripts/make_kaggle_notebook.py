@@ -124,10 +124,11 @@ cells.append(md(
 Same base (YOLO11-s), same data/schedule — **only the mixer differs**.
 
 **Kaggle note:** this model is ~69 GFLOPs and **memory-heavy** — the SSM stores a state trajectory
-per token (gradient-checkpointed to help, but still large). On a 14 GB T4 keep `BATCH` small
-(2–4) and `IMGSZ` ≤ 384. OOM? halve `BATCH`, then drop `IMGSZ`. Full COCO/300 epochs won't fit one
-Kaggle session — defaults use `coco128` for a *real but small* demo. For paper numbers, use your full
-dataset on a bigger GPU (A100/H100) or resume across sessions.
+per token (gradient-checkpointed, but the scan's intermediates still spike). On a 14 GB T4 the Mamba
+model fits at **`imgsz=256, batch=2`** (proven); above that it OOMs. The stock baseline could go
+higher, but keep BOTH at the same `imgsz` for a fair comparison. Still OOM? pass `d_state=16` to every
+`make_yaml(...)` (halves SSM memory), drop `batch`, or use a bigger GPU. Full COCO/300 epochs won't
+fit one Kaggle session — `coco128` here is a *real but small* demo, not a paper number.
 
 **Optimizer matters:** with a small batch, Ultralytics' `optimizer=auto` picks a tiny lr (~1e-4)
 and *nothing* learns (baseline included). We force `AdamW, lr0=2e-3` — robust across the mixed
@@ -137,8 +138,8 @@ use a real dataset with enough data for that."""))
 cells.append(code(
 """DATA   = 'coco128.yaml'   # <-- your data.yaml for real numbers (COCO / medical)
 EPOCHS = 100
-IMGSZ  = 384              # 640 for paper on a big GPU; 384 fits the T4
-BATCH  = 4               # T4-safe; raise on A100/H100
+IMGSZ  = 256              # the Mamba model OOMs on a T4 above ~256; keep BOTH models here for a fair compare
+BATCH  = 2               # T4-safe for the SSM. OOM anyway? set d_state=16 in make_yaml, or use a bigger GPU
 DEV    = 0
 # shared, so baseline and ours differ ONLY in the mixer
 TKW = dict(optimizer='AdamW', lr0=2e-3, warmup_epochs=5, cos_lr=True,

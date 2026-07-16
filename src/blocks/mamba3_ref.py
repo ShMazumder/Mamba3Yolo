@@ -1,32 +1,70 @@
 """
 Faithful pure-PyTorch reference for the Mamba-3 selective SSM.
 
-Implements the actual Mamba-3 recurrence (Lahoti et al., 2026, arXiv:2603.15569),
-NOT a gated-MLP stand-in. Sequential O(L) scan: correct and honest, not fast.
-Use it as the reference path when the official CUDA kernel is unavailable, and to
-run the paper's ablations (trapezoidal on/off via lambda, RoPE on/off).
+Implements the actual Mamba-3 recurrence (complex/rotational state + exponential-
+trapezoidal discretization), NOT a gated-MLP stand-in.
 
-Recurrence (Eq. 5-6, 11):
-    alpha_t = exp(dt_t * A)                         # decay, A < 0
-    beta_t  = (1 - lambda_t) * dt_t * alpha_t       # previous-input (trapezoidal) weight
+Recurrence (SISO, per head h, per channel p):
+    alpha_t = exp(dt_t * A)                          # scalar decay per head, A < 0
+    beta_t  = (1 - lambda_t) * dt_t * alpha_t        # previous-input (trapezoidal) weight
     gamma_t = lambda_t * dt_t                        # current-input weight
     h_t = alpha_t * h_{t-1}
-          + beta_t  * outer(x_{t-1}, RoPE(B_{t-1}, Phi_{t-1}))
           + gamma_t * outer(x_t,     RoPE(B_t,     Phi_t))
-    y_t = < h_t , RoPE(C_t, Phi_t) >                # sum over state dim
-where Phi_t is the cumulative, dt-scaled rotary angle (the product of R_i in Eq 11,
-realised via the RoPE trick: rotate B at write-time, C at read-time).
+          + beta_t  * outer(x_{t-1}, RoPE(B_{t-1}, Phi_{t-1}))
+    y_t = < h_t , RoPE(C_t, Phi_t) >
+Phi_t is the cumulative, data-dependent rotary angle; rotating B at write-time and C
+at read-time is the real-valued realisation of the complex state transition
+A_t = alpha_t * R(theta_t)  (scalar decay TIMES rotation -- the Mamba-2/3 SSD
+structure).  lambda_t = 1  ->  exponential-Euler  ==  Mamba-2 (single input term):
+that is the knob for the trapezoidal ablation.  use_rope=False -> real-valued
+diagonal SSM: the control for the parity/state-tracking gate.
 
-lambda_t = 1  ->  exponential-Euler  ==  Mamba-2 (single input term). This is the
-knob for the trapezoidal ablation. SISO here; MIMO (rank-r B/C) is a documented
-extension below, deliberately not enabled so we never over-claim what runs.
+WHAT CHANGED vs. the first version of this file (and why the detector NaN'd)
+--------------------------------------------------------------------------
+1. The chunked scan used  intra = Pin * cumsum(U / Pin)  with
+   Pin = cumprod(alpha).clamp(min=1e-6).  alpha = exp(dt*A) drops well below 1 after
+   a few optimizer steps, so alpha**chunk underflows (in fp16 already for
+   alpha < ~0.6), the clamp kicks in, and U / 1e-6 overflows fp16 -> inf -> NaN on
+   every batch.  That is exactly what the run log shows: NaN from epoch 2 and a
+   *frozen* model (identical val metrics every epoch = every AMP step skipped).
+   It is now replaced by the segment-sum ("SSD") form:
+       h_t = sum_{s<=t} exp(cs_t - cs_s) U_s ,   cs = cumsum(log alpha)
+   Every exp() argument is <= 0, so every factor lives in [0, 1].  No division, no
+   clamp, no overflow -- and it is *exactly* the same recurrence (see
+   scripts/validate_core.py, which checks it against the O(L) loop).
+2. A is now a scalar per head (shape (nheads,)) instead of (nheads, d_state).  That
+   is the Mamba-2/3 structure (A_t = alpha_t * R_t: scalar decay, rotation carries
+   the state-dependence) and it lets the readout be contracted analytically, so the
+   (B, L, H, P, N) state trajectory is never materialised.  Memory drops ~30x and
+   the block gets several times faster.
+3. The SSM math runs with autocast disabled (fp32).  exp / cumsum / rotation over
+   L = 4096..16384 tokens are not fp16-safe; the projections still run in fp16.
+4. The rotation rate is bounded (rot_max * tanh) and Phi is wrapped mod 2*pi.
+   Unbounded w_proj summed over 16k tokens produced |Phi| >> 1e4, which destroys
+   cos/sin precision (and overflows fp16 outright).  pi rad/step is still reachable,
+   so the parity gate still passes.
+5. token_saliency: F.pad(beta, (0,0,0,0,0,1)) padded the BATCH dim of a 3-D tensor
+   (beta is (B,L,H)), so beta_next came out length L-1 -> the
+   "size of tensor a (16383) must match tensor b (16384)" crash in the XAI cell.
+6. _reverse_energy was a Python loop over L (16384 steps x 4 directions x 8 blocks).
+   It is now a vectorised reverse scan reusing the same bounded machinery.
+
+MIMO extension (not enabled): make B_proj / C_proj emit (N * r) and reshape to
+(N, r), replace the outer product with a matmul over the rank-r channel group.
+Enable only once validated -- until then, SISO is what runs, and that is what any
+paper text should claim.
 """
 from __future__ import annotations
+
 import math
+from typing import Optional, Tuple
+
 import torch
 import torch.nn as nn
 import torch.nn.functional as F
 from torch import Tensor
+
+_NEG_INF = float("-inf")
 
 
 def _rope(v: Tensor, phi: Tensor) -> Tensor:
@@ -34,21 +72,30 @@ def _rope(v: Tensor, phi: Tensor) -> Tensor:
 
     v:   (..., N)      N even; consecutive pairs form the 2-D rotation blocks.
     phi: (..., N // 2) rotation angle per block.
-    Returns v rotated, same shape as v. This is the standard RoPE trick, i.e. a
-    real realisation of the complex-valued state transition (Prop. Complex-to-Real).
     """
-    v2 = v.unflatten(-1, (-1, 2))          # (..., N/2, 2)
+    v2 = v.unflatten(-1, (-1, 2))                      # (..., N/2, 2)
     cos, sin = torch.cos(phi), torch.sin(phi)
     x0, x1 = v2[..., 0], v2[..., 1]
-    r0 = x0 * cos - x1 * sin
-    r1 = x0 * sin + x1 * cos
-    return torch.stack((r0, r1), dim=-1).flatten(-2)   # (..., N)
+    return torch.stack((x0 * cos - x1 * sin, x0 * sin + x1 * cos), dim=-1).flatten(-2)
+
+
+def _causal_decay(cs: Tensor) -> Tensor:
+    """D[b,c,t,s,h] = exp(cs_t - cs_s) for s <= t, else 0.   cs: (B, nc, chunk, H).
+
+    cs is an inclusive cumsum of log(alpha) <= 0, so for s <= t the exponent is <= 0
+    and D is in [0, 1]. The strictly-upper triangle would have a positive exponent,
+    so it is masked to -inf BEFORE the exp (never after -- that would overflow).
+    """
+    c = cs.shape[2]
+    dec = cs.unsqueeze(3) - cs.unsqueeze(2)            # (B, nc, t, s, H)
+    causal = torch.ones(c, c, dtype=torch.bool, device=cs.device).tril()
+    return torch.exp(dec.masked_fill(~causal[None, None, :, :, None], _NEG_INF))
 
 
 class Mamba3RefSSM(nn.Module):
     """Selective SSM with exponential-trapezoidal discretization + complex (RoPE) states.
 
-    Diagonal (SISO) state per channel. Input/output are (B, L, D).
+    Input/output are (B, L, D).
     """
 
     def __init__(
@@ -62,12 +109,16 @@ class Mamba3RefSSM(nn.Module):
         rope_base: float = 10000.0,
         use_rope: bool = True,
         trapezoidal: bool = True,
+        chunk: int = 64,
+        rot_max: float = 2.0 * math.pi,
     ):
         super().__init__()
-        self.use_rope = use_rope        # False -> real-valued diagonal SSM (ablation control)
-        self.trapezoidal = trapezoidal  # False -> lambda=1 = exponential-Euler = Mamba-2
-        self.parallel = True            # chunked parallel scan; set False for O(L) reference
         assert d_state % 2 == 0, "d_state must be even for 2-D rotary blocks"
+        self.use_rope = use_rope          # False -> real-valued diagonal SSM (ablation control)
+        self.trapezoidal = trapezoidal    # False -> lambda=1 = exponential-Euler = Mamba-2
+        self.parallel = True              # chunked SSD scan; False -> O(L) reference loop
+        self.chunk = int(chunk)
+        self.rot_max = float(rot_max)     # max |rotation rate| per step (>= pi -> parity reachable)
         self.d_model = d_model
         self.d_inner = int(expand * d_model)
         self.headdim = min(headdim, self.d_inner)
@@ -75,139 +126,195 @@ class Mamba3RefSSM(nn.Module):
         self.nheads = self.d_inner // self.headdim
         self.d_state = d_state
 
-        # input / gate / output projections
         self.in_proj = nn.Linear(d_model, 2 * self.d_inner, bias=False)   # x, z(gate)
         self.out_proj = nn.Linear(self.d_inner, d_model, bias=False)
 
-        # data-dependent params: dt (per head), B/C (shared d_state), lambda (per head)
         self.dt_proj = nn.Linear(self.d_inner, self.nheads, bias=True)
-        self.B_proj = nn.Linear(self.d_inner, d_state, bias=True)   # explicit B bias term
-        self.C_proj = nn.Linear(self.d_inner, d_state, bias=True)   # explicit C bias term
+        self.B_proj = nn.Linear(self.d_inner, d_state, bias=True)
+        self.C_proj = nn.Linear(self.d_inner, d_state, bias=True)
         self.lam_proj = nn.Linear(self.d_inner, self.nheads, bias=True)
-        # Rotation RATE (imaginary part of complex A) -- data-dependent, decoupled from
-        # the small real decay step dt. Must reach ~pi/step to represent parity-style
-        # rotational state tracking; that is why it is NOT tied to dt (see parity gate).
+        # Rotation RATE (imaginary part of complex A): data-dependent, decoupled from the
+        # small real decay step dt, and bounded so cumulative angles stay well conditioned.
+        # Must reach ~pi/step to represent parity-style rotational state tracking.
         self.w_proj = nn.Linear(self.d_inner, self.nheads, bias=True)
 
-        # A < 0 via -exp(A_log); one decay rate per (head, state)
-        self.A_log = nn.Parameter(torch.zeros(self.nheads, d_state))
+        # A < 0 via -exp(A_log); ONE scalar decay rate per head (Mamba-2/3 SSD structure).
+        self.A_log = nn.Parameter(torch.zeros(self.nheads))
         self.norm = nn.LayerNorm(self.d_inner)
 
-        # fixed rotary base frequencies per 2-D block (data-independent part of the angle)
         theta = rope_base ** (-torch.arange(0, d_state, 2).float() / d_state)  # (N/2,)
         self.register_buffer("theta", theta, persistent=False)
 
-        # init dt bias so softplus(dt) lands in [dt_min, dt_max]
         with torch.no_grad():
             dt = torch.empty(self.nheads).uniform_(math.log(dt_min), math.log(dt_max)).exp()
             self.dt_proj.bias.copy_(dt + torch.log(-torch.expm1(-dt)))  # inverse softplus
 
+    # ------------------------------------------------------------------ pieces
+    def _rotate(self, uf: Tensor, Bt: Tensor, Ct: Tensor) -> Tuple[Tensor, Tensor]:
+        B, L, _ = uf.shape
+        H, N = self.nheads, self.d_state
+        Bh = Bt.unsqueeze(2).expand(B, L, H, N)
+        Ch = Ct.unsqueeze(2).expand(B, L, H, N)
+        if not self.use_rope:
+            return Bh, Ch                              # real-valued control: no rotation
+        w = self.rot_max * torch.tanh(self.w_proj(uf))          # (B,L,H) in (-rot_max, rot_max)
+        phi = torch.cumsum(w.unsqueeze(-1) * self.theta, dim=1)  # (B,L,H,N/2)
+        phi = torch.remainder(phi, 2.0 * math.pi)                # exact, keeps cos/sin accurate
+        return _rope(Bh, phi), _rope(Ch, phi)
+
+    def _coeffs(self, uf: Tensor):
+        """dt/lambda/A -> (log_alpha, gamma, beta). beta is None for the Euler ablation."""
+        dt = F.softplus(self.dt_proj(uf))                        # (B,L,H) > 0
+        log_alpha = dt * (-torch.exp(self.A_log.float()))        # (B,L,H) <= 0
+        if not self.trapezoidal:
+            return log_alpha, dt, None                           # lambda = 1
+        lam = torch.sigmoid(self.lam_proj(uf))                   # (B,L,H) in [0,1]
+        gamma = lam * dt
+        beta = (1.0 - lam) * dt * torch.exp(log_alpha)
+        return log_alpha, gamma, beta
+
+    # ------------------------------------------------------------------ forward
     def forward(self, x: Tensor) -> Tensor:
         B, L, _ = x.shape
-        H, P, N = self.nheads, self.headdim, self.d_state
+        H, P = self.nheads, self.headdim
 
         xz = self.in_proj(x)
         u, z = xz.chunk(2, dim=-1)                     # (B, L, d_inner) each
         u = self.norm(u)
 
-        dt = F.softplus(self.dt_proj(u))               # (B, L, H)  > 0
-        lam = torch.sigmoid(self.lam_proj(u))          # (B, L, H)  in [0,1]
-        if not self.trapezoidal:
-            lam = torch.ones_like(lam)                 # Euler / Mamba-2 ablation
-        Bt = self.B_proj(u)                            # (B, L, N)
-        Ct = self.C_proj(u)                            # (B, L, N)
-        A = -torch.exp(self.A_log)                     # (H, N)  < 0
+        # The SSM core is not fp16-safe (exp / cumsum / rotation over thousands of
+        # tokens). The projections above stay in AMP; only the core is forced to fp32.
+        with torch.autocast(device_type=x.device.type, enabled=False):
+            uf = u.float()
+            log_alpha, gamma, beta = self._coeffs(uf)
+            Brot, Crot = self._rotate(uf, self.B_proj(uf), self.C_proj(uf))
+            uh = uf.view(B, L, H, P)
+            scan = self._ssd if self.parallel else self._ssm_reference
+            y = scan(log_alpha, gamma, beta, uh, Brot, Crot)     # (B,L,H,P)
+            y = y.reshape(B, L, self.d_inner)
 
-        uh = u.view(B, L, H, P)                        # (B,L,H,P) per-head channels
-
-        # trapezoidal discretization coeffs, all steps at once
-        alpha = torch.exp(dt.unsqueeze(-1) * A)        # (B,L,H,N)
-        beta = ((1 - lam) * dt).unsqueeze(-1) * alpha  # (B,L,H,N)
-        gamma = (lam * dt).unsqueeze(-1)               # (B,L,H,1)
-
-        Bt_h = Bt.unsqueeze(2).expand(B, L, H, N)
-        Ct_h = Ct.unsqueeze(2).expand(B, L, H, N)
-        if self.use_rope:
-            # cumulative rotary angle Phi_t = sum_{i<=t} w_i * theta   (vectorized over L)
-            # w_t is the data-dependent rotation rate (imag part of A), free to reach ~pi.
-            w = self.w_proj(u)                             # (B,L,H) unbounded rotation rate
-            ang = w.unsqueeze(-1) * self.theta             # (B,L,H,N/2)
-            phi = torch.cumsum(ang, dim=1)                 # (B,L,H,N/2)
-            Brot = _rope(Bt_h, phi)                    # (B,L,H,N)
-            Crot = _rope(Ct_h, phi)
-        else:
-            Brot, Crot = Bt_h, Ct_h                    # real-valued control: no rotation
-
-        # per-step input drive U_t = gamma_t (x_t (x) B_t) + beta_t (x_{t-1} (x) B_{t-1})
-        cur = gamma.unsqueeze(3) * (uh.unsqueeze(-1) * Brot.unsqueeze(3))       # (B,L,H,P,N)
-        prev_uh = F.pad(uh, (0, 0, 0, 0, 1, 0))[:, :L]      # shift right by 1 along L
-        prev_Brot = F.pad(Brot, (0, 0, 0, 0, 1, 0))[:, :L]
-        prv = beta.unsqueeze(3) * (prev_uh.unsqueeze(-1) * prev_Brot.unsqueeze(3))
-        U = cur + prv                                  # (B,L,H,P,N)
-
-        alpha5 = alpha.unsqueeze(3)                    # (B,L,H,1,N) decay, broadcasts over P
-        Hs = self._scan_chunked(alpha5, U) if self.parallel else self._scan_reference(alpha5, U)
-
-        y = (Hs * Crot.unsqueeze(3)).sum(-1)           # (B,L,H,P)  readout y_t = <Crot_t, h_t>
-        y = y.reshape(B, L, self.d_inner)
-        y = y * F.silu(z)                              # gate
+        y = y.to(z.dtype) * F.silu(z)                  # gate
         return self.out_proj(y)
 
+    # ------------------------------------------------------------------ scans
     @staticmethod
-    def _scan_reference(alpha: Tensor, U: Tensor) -> Tensor:
-        """Sequential O(L) linear scan h_t = alpha_t h_{t-1} + U_t. Ground truth."""
-        B, L, H, P, N = U.shape
-        h = U.new_zeros(B, H, P, N)
+    def _shift(t: Tensor) -> Tensor:
+        """x_{t-1} along dim 1, zero-filled at t=0. t: (B, L, ...) with 2 trailing dims."""
+        L = t.shape[1]
+        return F.pad(t, (0, 0, 0, 0, 1, 0))[:, :L]
+
+    def _ssd(self, log_alpha: Tensor, gamma: Tensor, beta: Optional[Tensor],
+             x: Tensor, Br: Tensor, Cr: Tensor) -> Tensor:
+        """Chunked segment-sum scan. Mathematically identical to _ssm_reference.
+
+        log_alpha, gamma, beta: (B,L,H);  x: (B,L,H,P);  Br, Cr: (B,L,H,N)  -> y: (B,L,H,P)
+
+        Because A is scalar per head, the readout <h_t, C_t> can be contracted in closed
+        form, so the (B,L,H,P,N) state trajectory is never built:
+            y_t = sum_{s<=t} D[t,s] * (B_s . C_t) * w_s * x_s        (intra-chunk)
+                + exp(cs_t) * <h_chunk_start, C_t>                   (inter-chunk)
+        """
+        B, L, H, P = x.shape
+        N = Br.shape[-1]
+        c = max(1, min(self.chunk, L))
+        xp, Bp = self._shift(x), self._shift(Br)       # trapezoidal (previous-token) drive
+
+        pad = (-L) % c
+        if pad:
+            log_alpha = F.pad(log_alpha, (0, 0, 0, pad))          # log alpha = 0 -> alpha = 1
+            gamma = F.pad(gamma, (0, 0, 0, pad))                  # gamma = 0 -> no drive
+            beta = None if beta is None else F.pad(beta, (0, 0, 0, pad))
+            x, xp = F.pad(x, (0, 0, 0, 0, 0, pad)), F.pad(xp, (0, 0, 0, 0, 0, pad))
+            Br, Bp = F.pad(Br, (0, 0, 0, 0, 0, pad)), F.pad(Bp, (0, 0, 0, 0, 0, pad))
+            Cr = F.pad(Cr, (0, 0, 0, 0, 0, pad))
+        Lp, nc = L + pad, (L + pad) // c
+
+        la = log_alpha.view(B, nc, c, H)
+        gc = gamma.view(B, nc, c, H)
+        xc, xpc = x.view(B, nc, c, H, P), xp.view(B, nc, c, H, P)
+        Brc, Bpc = Br.view(B, nc, c, H, N), Bp.view(B, nc, c, H, N)
+        Crc = Cr.view(B, nc, c, H, N)
+        bc = None if beta is None else beta.view(B, nc, c, H)
+
+        cs = la.cumsum(2)                              # (B,nc,c,H) inclusive
+        D = _causal_decay(cs)                          # (B,nc,t,s,H) in [0,1]
+
+        # ---- intra-chunk readout
+        att = torch.einsum("bcthn,bcshn->bctsh", Crc, Brc) * D * gc.unsqueeze(2)
+        y = torch.einsum("bctsh,bcshp->bcthp", att, xc)
+        if bc is not None:
+            attp = torch.einsum("bcthn,bcshn->bctsh", Crc, Bpc) * D * bc.unsqueeze(2)
+            y = y + torch.einsum("bctsh,bcshp->bcthp", attp, xpc)
+
+        # ---- per-chunk end state, then the only sequential part: nc = L/chunk steps
+        Sc = torch.exp(cs[:, :, -1:, :] - cs)          # (B,nc,c,H) in (0,1]: decay s -> chunk end
+        h_local = torch.einsum("bcshp,bcshn->bchpn", (Sc * gc).unsqueeze(-1) * xc, Brc)
+        if bc is not None:
+            h_local = h_local + torch.einsum("bcshp,bcshn->bchpn",
+                                             (Sc * bc).unsqueeze(-1) * xpc, Bpc)
+        adv = torch.exp(cs[:, :, -1, :])               # (B,nc,H) full-chunk decay, in (0,1]
+        states, h = [], x.new_zeros(B, H, P, N)
+        for i in range(nc):
+            states.append(h)                           # state entering chunk i
+            h = adv[:, i, :, None, None] * h + h_local[:, i]
+        states = torch.stack(states, 1)                # (B,nc,H,P,N)
+
+        # ---- inter-chunk readout
+        y = y + torch.einsum("bcthn,bchpn->bcthp", Crc, states) * torch.exp(cs).unsqueeze(-1)
+        return y.reshape(B, Lp, H, P)[:, :L]
+
+    def _ssm_reference(self, log_alpha: Tensor, gamma: Tensor, beta: Optional[Tensor],
+                       x: Tensor, Br: Tensor, Cr: Tensor) -> Tensor:
+        """Sequential O(L) ground truth. Correct and honest, not fast."""
+        B, L, H, P = x.shape
+        N = Br.shape[-1]
+        alpha = torch.exp(log_alpha)
+        xp, Bp = self._shift(x), self._shift(Br)
+        h = x.new_zeros(B, H, P, N)
         out = []
         for t in range(L):
-            h = alpha[:, t] * h + U[:, t]
-            out.append(h)
-        return torch.stack(out, dim=1)                 # (B,L,H,P,N)
+            U = gamma[:, t, :, None, None] * x[:, t, :, :, None] * Br[:, t, :, None, :]
+            if beta is not None:
+                U = U + beta[:, t, :, None, None] * xp[:, t, :, :, None] * Bp[:, t, :, None, :]
+            h = alpha[:, t, :, None, None] * h + U
+            out.append((h * Cr[:, t, :, None, :]).sum(-1))
+        return torch.stack(out, dim=1)
 
-    @staticmethod
-    def _scan_chunked(alpha: Tensor, U: Tensor, chunk: int = 32) -> Tensor:
-        """Chunked prefix scan of h_t = alpha_t h_{t-1} + U_t.
-
-        Within-chunk work is fully parallel via cumulative products; only the
-        chunk-carry recurrence loops (L/chunk steps). Numerically safe while the
-        per-chunk decay product stays well above underflow -- true here because
-        alpha = exp(dt*A) with small dt keeps alpha near 1.
-        """
-        B, L, H, P, N = U.shape
-        pad = (chunk - L % chunk) % chunk
+    def _scan_scalar(self, log_a: Tensor, u: Tensor) -> Tensor:
+        """h_j = exp(log_a_j) * h_{j-1} + u_j, vectorised. Both (B, L, H) -> (B, L, H)."""
+        B, L, H = u.shape
+        c = max(1, min(self.chunk, L))
+        pad = (-L) % c
         if pad:
-            U = F.pad(U, (0, 0, 0, 0, 0, 0, 0, pad))
-            alpha = F.pad(alpha, (0, 0, 0, 0, 0, 0, 0, pad), value=1.0)
-        Lp = L + pad
-        nc = Lp // chunk
-        Uc = U.view(B, nc, chunk, H, P, N)
-        Ac = alpha.view(B, nc, chunk, H, 1, N)
-        Pin = torch.cumprod(Ac, dim=2).clamp(min=1e-6)  # inclusive within-chunk decay (clamp for AMP safety)
-        intra = Pin * torch.cumsum(Uc / Pin, dim=2)    # (B,nc,chunk,H,P,N)
-        Ptot = Pin[:, :, -1]                           # (B,nc,H,1,N) full-chunk decay
-        last = intra[:, :, -1]                         # (B,nc,H,P,N) chunk-final state
-        carry = U.new_zeros(B, H, P, N)
-        carries = []
-        for c in range(nc):                            # nc = L/chunk steps, vectorized within
-            carries.append(carry)
-            carry = Ptot[:, c] * carry + last[:, c]
-        carries = torch.stack(carries, dim=1)          # (B,nc,H,P,N) state entering each chunk
-        Hs = intra + Pin * carries.unsqueeze(2)        # add carried state, broadcast over chunk
-        return Hs.view(B, Lp, H, P, N)[:, :L]
+            log_a, u = F.pad(log_a, (0, 0, 0, pad)), F.pad(u, (0, 0, 0, pad))
+        Lp, nc = L + pad, (L + pad) // c
+        la, uc = log_a.view(B, nc, c, H), u.view(B, nc, c, H)
+        cs = la.cumsum(2)
+        y = torch.einsum("bctsh,bcsh->bcth", _causal_decay(cs), uc)
+        Sc = torch.exp(cs[:, :, -1:, :] - cs)
+        h_local = (Sc * uc).sum(2)                     # (B,nc,H)
+        adv = torch.exp(cs[:, :, -1, :])
+        states, h = [], u.new_zeros(B, H)
+        for i in range(nc):
+            states.append(h)
+            h = adv[:, i] * h + h_local[:, i]
+        y = y + torch.stack(states, 1).unsqueeze(2) * torch.exp(cs)
+        return y.reshape(B, Lp, H)[:, :L]
 
-    def _reverse_energy(self, alpha: Tensor) -> Tensor:
-        """G_tau[n] = sum_{t>=tau} (prod_{k=tau+1..t} alpha_k[n])^2 via the stable
-        reverse recurrence G_tau = 1 + alpha_{tau+1}^2 G_{tau+1} (G stays O(1), no
-        division/underflow). (B,L,H,N). Eval-only (saliency), so an O(L) loop is fine."""
-        a2 = alpha ** 2
-        L = a2.shape[1]
-        G = torch.empty_like(a2)
-        g = torch.zeros_like(a2[:, 0])                      # G_{tau+1}, starts at 0 (G_L)
-        for t in range(L - 1, -1, -1):
-            g = torch.ones_like(g) if t == L - 1 else 1.0 + a2[:, t + 1] * g
-            G[:, t] = g
-        return G
+    def _reverse_energy(self, log_alpha: Tensor) -> Tensor:
+        """G_tau = sum_{t>=tau} (prod_{k=tau+1..t} alpha_k)^2, i.e. the stable reverse
+        recurrence G_tau = 1 + alpha_{tau+1}^2 * G_{tau+1}, G_{L-1} = 1.  (B,L,H).
 
+        Written as a forward scan on the reversed sequence so it costs O(L/chunk) steps
+        instead of O(L) Python iterations (L is 4k-16k tokens per block here).
+        """
+        L = log_alpha.shape[1]
+        af = torch.flip(2.0 * log_alpha, dims=[1])               # af[j] = 2*log alpha_{L-1-j}
+        logc = F.pad(af, (0, 0, 1, 0))[:, :L]                    # c_j = alpha_{L-j}^2, c_0 free
+        g = self._scan_scalar(logc, torch.ones_like(logc))       # g_j = c_j g_{j-1} + 1
+        return torch.flip(g, dims=[1])
+
+    # ------------------------------------------------------------------ XAI
     @torch.no_grad()
     def token_saliency(self, x: Tensor) -> Tensor:
         """Intrinsic controllability-energy saliency per input token. Returns (B, L).
@@ -215,47 +322,25 @@ class Mamba3RefSSM(nn.Module):
 
         Accounts for BOTH Gramian contributions of each token:
           - gamma term: token t's direct drive at step t
-          - beta term:  token t's carry-forward drive at step t+1 (trapezoidal)
+          - beta  term: token t's carry-forward drive at step t+1 (trapezoidal)
         """
         B, L, _ = x.shape
-        H, P, N = self.nheads, self.headdim, self.d_state
+        H, P = self.nheads, self.headdim
         u, _ = self.in_proj(x).chunk(2, dim=-1)
         u = self.norm(u)
-        dt = F.softplus(self.dt_proj(u))
-        lam = torch.sigmoid(self.lam_proj(u))
-        if not self.trapezoidal:
-            lam = torch.ones_like(lam)
-        Bt = self.B_proj(u)
-        A = -torch.exp(self.A_log)
-        uh = u.view(B, L, H, P)
-        alpha = torch.exp(dt.unsqueeze(-1) * A)             # (B,L,H,N)
-        gamma = lam * dt                                    # (B,L,H)
-        beta = (1 - lam) * dt                               # (B,L,H) trapezoidal weight
-        Bt_h = Bt.unsqueeze(2).expand(B, L, H, N)
-        if self.use_rope:
-            w = self.w_proj(u)
-            phi = torch.cumsum(w.unsqueeze(-1) * self.theta, dim=1)
-            Brot = _rope(Bt_h, phi)
-        else:
-            Brot = Bt_h
-        G = self._reverse_energy(alpha)                     # (B,L,H,N)
-        energy = (Brot ** 2 * G).sum(-1)                    # (B,L,H)
-        uh_norm = (uh ** 2).sum(-1)                         # (B,L,H)
-        # Current-input (gamma) contribution: token t drives state at step t
-        s_gamma = (gamma ** 2) * uh_norm * energy           # (B,L,H)
-        # Trapezoidal (beta) contribution: token t drives state at step t+1
-        # beta_{t+1} * alpha_{t+1} weight; G shifted by one step
-        beta_next = F.pad(beta, (0, 0, 0, 0, 0, 1))[:, 1:L+1]     # (B,L,H) beta at t+1
-        alpha_next = F.pad(alpha, (0, 0, 0, 0, 0, 1), value=1.0)[:, 1:L+1]  # (B,L,H,N)
-        G_next = F.pad(G, (0, 0, 0, 0, 0, 1))[:, 1:L+1]           # (B,L,H,N)
-        energy_next = (Brot ** 2 * alpha_next ** 2 * G_next).sum(-1)  # (B,L,H)
-        s_beta = (beta_next ** 2) * uh_norm * energy_next   # (B,L,H)
-        s = s_gamma + s_beta                                # (B,L,H)
-        return s.mean(-1)                                   # (B,L)
-
-
-# MIMO extension (not enabled): make B_proj / C_proj emit (N * r) and reshape to
-# (N, r) matrices, replace the outer product `xt (x) Brot` with a matmul over the
-# rank-r channel group, and read out y_t = Crot^T h. Enable only once validated
-# against the paper's state-size vs. perplexity ablation -- until then, SISO is
-# what runs, and that is what any paper text should claim.
+        with torch.autocast(device_type=x.device.type, enabled=False):
+            uf = u.float()
+            log_alpha, gamma, beta = self._coeffs(uf)
+            Bt = self.B_proj(uf)
+            Brot, _ = self._rotate(uf, Bt, Bt)
+            uh = uf.view(B, L, H, P)
+            G = self._reverse_energy(log_alpha)                  # (B,L,H)
+            bnorm = (Brot ** 2).sum(-1)                          # (B,L,H)
+            xnorm = (uh ** 2).sum(-1)                            # (B,L,H)
+            s = (gamma ** 2) * xnorm * bnorm * G                 # token t drives state at t
+            if beta is not None:
+                # token t also drives the state at t+1 with weight beta_{t+1}
+                beta_next = F.pad(beta, (0, 0, 0, 1))[:, 1:L + 1]
+                G_next = F.pad(G, (0, 0, 0, 1))[:, 1:L + 1]
+                s = s + (beta_next ** 2) * xnorm * bnorm * G_next
+        return s.mean(-1)                                        # (B, L)

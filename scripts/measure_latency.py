@@ -46,7 +46,7 @@ def measure_pytorch(
     with torch.no_grad():
         for _ in range(warmup):
             if amp and device == "cuda":
-                with torch.cuda.amp.autocast():
+                with torch.amp.autocast('cuda'):
                     _ = model(x)
             else:
                 _ = model(x)
@@ -61,7 +61,7 @@ def measure_pytorch(
                 torch.cuda.synchronize()
             t0 = time.perf_counter()
             if amp and device == "cuda":
-                with torch.cuda.amp.autocast():
+                with torch.amp.autocast('cuda'):
                     _ = model(x)
             else:
                 _ = model(x)

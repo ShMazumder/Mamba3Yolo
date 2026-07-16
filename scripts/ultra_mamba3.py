@@ -71,8 +71,11 @@ def make_yaml(scale: str = "s", d_state: int = 32, expand: int = 1,
     d["head"] = swap(d["head"])
 
     if tag is None:
-        tag = "" if (use_rope and trapezoidal) else \
-              ("-norope" if not use_rope else "") + ("-euler" if not trapezoidal else "")
+        tag = ""
+        if not use_rope:
+            tag += "-norope"
+        if not trapezoidal:
+            tag += "-euler"
     out_dir = Path(__file__).resolve().parents[1] / "configs/models"
     out_dir.mkdir(parents=True, exist_ok=True)
     out = out or str(out_dir / f"yolo11{scale}-mamba3{tag}.yaml")

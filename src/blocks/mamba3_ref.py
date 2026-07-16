@@ -120,12 +120,6 @@ class Mamba3RefSSM(nn.Module):
 
         uh = u.view(B, L, H, P)                        # (B,L,H,P) per-head channels
 
-        # cumulative rotary angle Phi_t = sum_{i<=t} w_i * theta   (vectorized over L)
-        # w_t is the data-dependent rotation rate (imag part of A), free to reach ~pi.
-        w = self.w_proj(u)                             # (B,L,H) unbounded rotation rate
-        ang = w.unsqueeze(-1) * self.theta             # (B,L,H,N/2)
-        phi = torch.cumsum(ang, dim=1)                 # (B,L,H,N/2)
-
         # trapezoidal discretization coeffs, all steps at once
         alpha = torch.exp(dt.unsqueeze(-1) * A)        # (B,L,H,N)
         beta = ((1 - lam) * dt).unsqueeze(-1) * alpha  # (B,L,H,N)
@@ -134,6 +128,11 @@ class Mamba3RefSSM(nn.Module):
         Bt_h = Bt.unsqueeze(2).expand(B, L, H, N)
         Ct_h = Ct.unsqueeze(2).expand(B, L, H, N)
         if self.use_rope:
+            # cumulative rotary angle Phi_t = sum_{i<=t} w_i * theta   (vectorized over L)
+            # w_t is the data-dependent rotation rate (imag part of A), free to reach ~pi.
+            w = self.w_proj(u)                             # (B,L,H) unbounded rotation rate
+            ang = w.unsqueeze(-1) * self.theta             # (B,L,H,N/2)
+            phi = torch.cumsum(ang, dim=1)                 # (B,L,H,N/2)
             Brot = _rope(Bt_h, phi)                    # (B,L,H,N)
             Crot = _rope(Ct_h, phi)
         else:
@@ -183,7 +182,7 @@ class Mamba3RefSSM(nn.Module):
         nc = Lp // chunk
         Uc = U.view(B, nc, chunk, H, P, N)
         Ac = alpha.view(B, nc, chunk, H, 1, N)
-        Pin = torch.cumprod(Ac, dim=2)                 # inclusive within-chunk decay
+        Pin = torch.cumprod(Ac, dim=2).clamp(min=1e-6)  # inclusive within-chunk decay (clamp for AMP safety)
         intra = Pin * torch.cumsum(Uc / Pin, dim=2)    # (B,nc,chunk,H,P,N)
         Ptot = Pin[:, :, -1]                           # (B,nc,H,1,N) full-chunk decay
         last = intra[:, :, -1]                         # (B,nc,H,P,N) chunk-final state
@@ -212,18 +211,26 @@ class Mamba3RefSSM(nn.Module):
     @torch.no_grad()
     def token_saliency(self, x: Tensor) -> Tensor:
         """Intrinsic controllability-energy saliency per input token. Returns (B, L).
-        Closed-form from the SSM internals, one pass, no backprop."""
+        Closed-form from the SSM internals, one pass, no backprop.
+
+        Accounts for BOTH Gramian contributions of each token:
+          - gamma term: token t's direct drive at step t
+          - beta term:  token t's carry-forward drive at step t+1 (trapezoidal)
+        """
         B, L, _ = x.shape
         H, P, N = self.nheads, self.headdim, self.d_state
         u, _ = self.in_proj(x).chunk(2, dim=-1)
         u = self.norm(u)
         dt = F.softplus(self.dt_proj(u))
         lam = torch.sigmoid(self.lam_proj(u))
+        if not self.trapezoidal:
+            lam = torch.ones_like(lam)
         Bt = self.B_proj(u)
         A = -torch.exp(self.A_log)
         uh = u.view(B, L, H, P)
         alpha = torch.exp(dt.unsqueeze(-1) * A)             # (B,L,H,N)
         gamma = lam * dt                                    # (B,L,H)
+        beta = (1 - lam) * dt                               # (B,L,H) trapezoidal weight
         Bt_h = Bt.unsqueeze(2).expand(B, L, H, N)
         if self.use_rope:
             w = self.w_proj(u)
@@ -233,7 +240,17 @@ class Mamba3RefSSM(nn.Module):
             Brot = Bt_h
         G = self._reverse_energy(alpha)                     # (B,L,H,N)
         energy = (Brot ** 2 * G).sum(-1)                    # (B,L,H)
-        s = (gamma ** 2) * (uh ** 2).sum(-1) * energy       # (B,L,H)
+        uh_norm = (uh ** 2).sum(-1)                         # (B,L,H)
+        # Current-input (gamma) contribution: token t drives state at step t
+        s_gamma = (gamma ** 2) * uh_norm * energy           # (B,L,H)
+        # Trapezoidal (beta) contribution: token t drives state at step t+1
+        # beta_{t+1} * alpha_{t+1} weight; G shifted by one step
+        beta_next = F.pad(beta, (0, 0, 0, 0, 0, 1))[:, 1:L+1]     # (B,L,H) beta at t+1
+        alpha_next = F.pad(alpha, (0, 0, 0, 0, 0, 1), value=1.0)[:, 1:L+1]  # (B,L,H,N)
+        G_next = F.pad(G, (0, 0, 0, 0, 0, 1))[:, 1:L+1]           # (B,L,H,N)
+        energy_next = (Brot ** 2 * alpha_next ** 2 * G_next).sum(-1)  # (B,L,H)
+        s_beta = (beta_next ** 2) * uh_norm * energy_next   # (B,L,H)
+        s = s_gamma + s_beta                                # (B,L,H)
         return s.mean(-1)                                   # (B,L)
 
 

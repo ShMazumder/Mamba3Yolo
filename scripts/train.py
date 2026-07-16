@@ -26,7 +26,7 @@ from typing import Dict, Any
 import torch
 import torch.nn as nn
 from torch.utils.data import DataLoader, Dataset
-from torch.cuda.amp import GradScaler, autocast
+from torch.amp import GradScaler, autocast
 import torch.optim as optim
 
 # Local imports
@@ -113,11 +113,13 @@ class SimpleDetectionLoss(nn.Module):
         self.nc = nc
 
     def forward(self, preds, targets):
-        device = preds[0].device
-        # Placeholder so the script runs end-to-end and optimizes something
-        # Replace with full YOLO loss (DFL + BCE + IoU) for real experiments
-        loss = sum(p.float().mean() for p in preds) * 0.0
-        return loss + torch.tensor(0.01, device=device, requires_grad=True)
+        raise NotImplementedError(
+            "SimpleDetectionLoss is a placeholder that learns nothing. "
+            "Use the Ultralytics pipeline instead:\n"
+            "  from scripts.ultra_mamba3 import register, make_yaml\n"
+            "  register(); YOLO(make_yaml('s')).train(data='coco.yaml', ...)\n"
+            "Or implement a real loss (DFL + BCE + IoU) here."
+        )
 
 
 def train_one_epoch(model, loader, optimizer, scaler, loss_fn, device, epoch, amp=True):
@@ -130,7 +132,7 @@ def train_one_epoch(model, loader, optimizer, scaler, loss_fn, device, epoch, am
         targets = targets.to(device)
 
         optimizer.zero_grad(set_to_none=True)
-        with autocast(enabled=amp and device.startswith("cuda")):
+        with autocast('cuda', enabled=amp and device.startswith("cuda")):
             preds = model(imgs)
             loss = loss_fn(preds, targets)
 

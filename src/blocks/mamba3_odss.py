@@ -59,22 +59,6 @@ class RGBlock(nn.Module):
         x = self.act(x1) * x2; x = self.dw(x); x = self.fc_out(x)
         return self.norm(x + residual)
 
-class Mamba3Reference(nn.Module):
-    def __init__(self, d_model: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, **kwargs):
-        super().__init__()
-        self.d_model = d_model
-        self.d_inner = int(expand * d_model)
-        self.in_proj = nn.Linear(d_model, self.d_inner * 2, bias=False)
-        self.out_proj = nn.Linear(self.d_inner, d_model, bias=False)
-        self.norm = nn.LayerNorm(self.d_inner)
-        self.act = nn.SiLU()
-        self.scale = nn.Parameter(torch.ones(1) * 0.1)
-    def forward(self, x: Tensor) -> Tensor:
-        residual = x
-        xz = self.in_proj(x)
-        x, z = xz.chunk(2, dim=-1)
-        y = self.act(z) * self.norm(x)
-        return residual + self.scale * self.out_proj(y)
 
 class Mamba3SS2D(nn.Module):
     def __init__(self, dim: int, d_state: int = 64, expand: int = 2, headdim: int = 64, is_mimo: bool = True, mimo_rank: int = 4, drop_path: float = 0.0, use_rope: bool = True, trapezoidal: bool = True):
@@ -87,28 +71,25 @@ class Mamba3SS2D(nn.Module):
         # mechanism-ablation toggles (complex-state and trapezoidal discretization).
         self.ref = Mamba3RefSSM(dim, d_state=d_state + (d_state % 2), expand=expand, headdim=headdim, use_rope=use_rope, trapezoidal=trapezoidal)
         self._use_official = False
-        self.mamba = None
+        self._official_mamba = None   # stored outside nn.Module to avoid doubling params
         if HAS_MAMBA3:
             try:
-                self.mamba = Mamba3(d_model=dim, d_state=min(d_state, 64), expand=expand, headdim=min(headdim, 64), is_mimo=False, mimo_rank=1)
+                self._official_mamba = Mamba3(d_model=dim, d_state=min(d_state, 64), expand=expand, headdim=min(headdim, 64), is_mimo=False, mimo_rank=1)
                 self._use_official = True
             except Exception:
-                self.mamba = self.ref
+                self._official_mamba = None
                 self._use_official = False
-        else:
-            self.mamba = self.ref
-            self._use_official = False
     def _safe_mamba(self, seq: Tensor) -> Tensor:
         seq = seq.contiguous()
         if not self._use_official:
             return self.ref(seq)
         try:
-            return self.mamba(seq)
+            return self._official_mamba(seq)
         except Exception:
             if self._use_official:
                 print("[Mamba3SS2D] Official kernel failed once → permanently using pure-PyTorch reference")
                 self._use_official = False
-                self.mamba = None
+                self._official_mamba = None
             return self.ref(seq)
     def _four_dir_scan(self, x: Tensor) -> Tensor:
         B, C, H, W = x.shape

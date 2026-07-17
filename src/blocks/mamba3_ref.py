@@ -150,25 +150,25 @@ class Mamba3RefSSM(nn.Module):
             self.dt_proj.bias.copy_(dt + torch.log(-torch.expm1(-dt)))  # inverse softplus
 
     # ------------------------------------------------------------------ pieces
-    def _rotate(self, uf: Tensor, Bt: Tensor, Ct: Tensor) -> Tuple[Tensor, Tensor]:
-        B, L, _ = uf.shape
+    def _rotate(self, w_proj_out: Tensor, Bt: Tensor, Ct: Tensor) -> Tuple[Tensor, Tensor]:
+        B, L, _ = Bt.shape
         H, N = self.nheads, self.d_state
-        Bh = Bt.unsqueeze(2).expand(B, L, H, N)
-        Ch = Ct.unsqueeze(2).expand(B, L, H, N)
+        Bh = Bt.float().unsqueeze(2).expand(B, L, H, N)
+        Ch = Ct.float().unsqueeze(2).expand(B, L, H, N)
         if not self.use_rope:
             return Bh, Ch                              # real-valued control: no rotation
-        w = self.rot_max * torch.tanh(self.w_proj(uf))          # (B,L,H) in (-rot_max, rot_max)
-        phi = torch.cumsum(w.unsqueeze(-1) * self.theta, dim=1)  # (B,L,H,N/2)
+        w = self.rot_max * torch.tanh(w_proj_out.float())          # (B,L,H) in (-rot_max, rot_max)
+        phi = torch.cumsum(w.unsqueeze(-1) * self.theta.float(), dim=1)  # (B,L,H,N/2)
         phi = torch.remainder(phi, 2.0 * math.pi)                # exact, keeps cos/sin accurate
         return _rope(Bh, phi), _rope(Ch, phi)
 
-    def _coeffs(self, uf: Tensor):
+    def _coeffs(self, dt_proj_out: Tensor, lam_proj_out: Optional[Tensor]):
         """dt/lambda/A -> (log_alpha, gamma, beta). beta is None for the Euler ablation."""
-        dt = F.softplus(self.dt_proj(uf))                        # (B,L,H) > 0
+        dt = F.softplus(dt_proj_out.float())                     # (B,L,H) > 0
         log_alpha = dt * (-torch.exp(self.A_log.float()))        # (B,L,H) <= 0
         if not self.trapezoidal:
             return log_alpha, dt, None                           # lambda = 1
-        lam = torch.sigmoid(self.lam_proj(uf))                   # (B,L,H) in [0,1]
+        lam = torch.sigmoid(lam_proj_out.float())                # (B,L,H) in [0,1]
         gamma = lam * dt
         beta = (1.0 - lam) * dt * torch.exp(log_alpha)
         return log_alpha, gamma, beta
@@ -182,13 +182,19 @@ class Mamba3RefSSM(nn.Module):
         u, z = xz.chunk(2, dim=-1)                     # (B, L, d_inner) each
         u = self.norm(u)
 
+        # Projections run natively in whatever dtype model is in (e.g. float16 during val)
+        dt_val = self.dt_proj(u)
+        lam_val = self.lam_proj(u) if self.trapezoidal else None
+        B_val = self.B_proj(u)
+        C_val = self.C_proj(u)
+        w_val = self.w_proj(u) if self.use_rope else None
+
         # The SSM core is not fp16-safe (exp / cumsum / rotation over thousands of
-        # tokens). The projections above stay in AMP; only the core is forced to fp32.
+        # tokens). The sensitive math is forced to fp32.
         with torch.autocast(device_type=x.device.type, enabled=False):
-            uf = u.float()
-            log_alpha, gamma, beta = self._coeffs(uf)
-            Brot, Crot = self._rotate(uf, self.B_proj(uf), self.C_proj(uf))
-            uh = uf.view(B, L, H, P)
+            log_alpha, gamma, beta = self._coeffs(dt_val, lam_val)
+            Brot, Crot = self._rotate(w_val, B_val, C_val)
+            uh = u.float().view(B, L, H, P)
             scan = self._ssd if self.parallel else self._ssm_reference
             y = scan(log_alpha, gamma, beta, uh, Brot, Crot)     # (B,L,H,P)
             y = y.reshape(B, L, self.d_inner)
@@ -328,12 +334,16 @@ class Mamba3RefSSM(nn.Module):
         H, P = self.nheads, self.headdim
         u, _ = self.in_proj(x).chunk(2, dim=-1)
         u = self.norm(u)
+        
+        dt_val = self.dt_proj(u)
+        lam_val = self.lam_proj(u) if self.trapezoidal else None
+        B_val = self.B_proj(u)
+        w_val = self.w_proj(u) if self.use_rope else None
+
         with torch.autocast(device_type=x.device.type, enabled=False):
-            uf = u.float()
-            log_alpha, gamma, beta = self._coeffs(uf)
-            Bt = self.B_proj(uf)
-            Brot, _ = self._rotate(uf, Bt, Bt)
-            uh = uf.view(B, L, H, P)
+            log_alpha, gamma, beta = self._coeffs(dt_val, lam_val)
+            Brot, _ = self._rotate(w_val, B_val, B_val)
+            uh = u.float().view(B, L, H, P)
             G = self._reverse_energy(log_alpha)                  # (B,L,H)
             bnorm = (Brot ** 2).sum(-1)                          # (B,L,H)
             xnorm = (uh ** 2).sum(-1)                            # (B,L,H)

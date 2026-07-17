@@ -192,8 +192,8 @@ class Mamba3ODSS(nn.Module):
                  expand: int = 1, mlp_ratio: float = 1.0,
                  use_rope: bool = True, trapezoidal: bool = True):
         super().__init__()
-        self.block = build_mamba3_odss(c1, c2, n=max(int(n), 1), d_state=d_state,
-                                       expand=expand, mlp_ratio=mlp_ratio,
+        self.block = build_mamba3_odss(c1, c2, n=max(int(n), 1), d_state=int(d_state),
+                                       expand=int(expand), mlp_ratio=float(mlp_ratio),
                                        use_rope=bool(use_rope), trapezoidal=bool(trapezoidal))
 
     def forward(self, x: Tensor) -> Tensor:

@@ -1,0 +1,4481 @@
+{
+  "nodes": [
+    {
+      "id": "scripts_build_yolo11_mamba3",
+      "label": "build_yolo11_mamba3.py",
+      "file_type": "code",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_build_yolo11_mamba3_swap_mixers",
+      "label": "_swap_mixers()",
+      "file_type": "code",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L32",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_build_yolo11_mamba3_py_module",
+      "label": "Module",
+      "file_type": "code",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L32",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "label": "build_yolo11_mamba3()",
+      "file_type": "code",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L61",
+      "_origin": "ast"
+    },
+    {
+      "id": "detectionmodel",
+      "label": "DetectionModel",
+      "file_type": "code",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L61",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_build_yolo11_mamba3_rationale_34",
+      "label": "Replace every C3k2 / C2f block in a DetectionModel with build_mamba3_odss,",
+      "file_type": "rationale",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L34",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_build_yolo11_mamba3_rationale_63",
+      "label": "Build YOLO11-<scale> with Mamba-3 mixers. Returns an Ultralytics DetectionModel.",
+      "file_type": "rationale",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L63",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_make_kaggle_notebook",
+      "label": "make_kaggle_notebook.py",
+      "file_type": "code",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_make_kaggle_notebook_md",
+      "label": "md()",
+      "file_type": "code",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_make_kaggle_notebook_code",
+      "label": "code()",
+      "file_type": "code",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L22",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_make_kaggle_notebook_writefile",
+      "label": "writefile()",
+      "file_type": "code",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L23",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_measure_latency",
+      "label": "measure_latency.py",
+      "file_type": "code",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_measure_latency_measure_pytorch",
+      "label": "measure_pytorch()",
+      "file_type": "code",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L33",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_measure_latency_py_module",
+      "label": "Module",
+      "file_type": "code",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L33",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_measure_latency_measure_onnx",
+      "label": "measure_onnx()",
+      "file_type": "code",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L95",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_measure_latency_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L138",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train",
+      "label": "train.py",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_yolofolderdataset",
+      "label": "YoloFolderDataset",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "dataset",
+      "label": "Dataset",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_yolofolderdataset_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L48",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_yolofolderdataset_len",
+      "label": ".__len__()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L63",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_yolofolderdataset_getitem",
+      "label": ".__getitem__()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L66",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_collate_fn",
+      "label": "collate_fn()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L94",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_simpledetectionloss",
+      "label": "SimpleDetectionLoss",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L110",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_simpledetectionloss_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L111",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_simpledetectionloss_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L115",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_train_one_epoch",
+      "label": "train_one_epoch()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L125",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/train.py",
+      "source_location": "L152",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_rationale_41",
+      "label": "Simple folder dataset for research.     Expects:       root/         images/",
+      "file_type": "rationale",
+      "source_file": "scripts/train.py",
+      "source_location": "L41",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval",
+      "label": "train_eval.py",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_syntheticblobdataset",
+      "label": "SyntheticBlobDataset",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L35",
+      "_origin": "ast"
+    },
+    {
+      "id": "dataset",
+      "label": "Dataset",
+      "file_type": "code",
+      "source_file": "",
+      "source_location": "",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_syntheticblobdataset_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_syntheticblobdataset_len",
+      "label": ".__len__()",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L42",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_syntheticblobdataset_getitem",
+      "label": ".__getitem__()",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L44",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_evaluate",
+      "label": "evaluate()",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L58",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_main",
+      "label": "main()",
+      "file_type": "code",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L72",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_train_eval_rationale_36",
+      "label": "One bright square per image at a random location; label is its box, class 0.",
+      "file_type": "rationale",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L36",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_ultra_mamba3",
+      "label": "ultra_mamba3.py",
+      "file_type": "code",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_ultra_mamba3_register",
+      "label": "register()",
+      "file_type": "code",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L37",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_ultra_mamba3_make_yaml",
+      "label": "make_yaml()",
+      "file_type": "code",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L67",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_ultra_mamba3_rationale_38",
+      "label": "Patch ultralytics.nn.tasks.parse_model so it treats Mamba3ODSS as a     channel-",
+      "file_type": "rationale",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L38",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_ultra_mamba3_rationale_70",
+      "label": "Generate a yolo11-mamba3 yaml from the stock yolo11 config, swapping C3k2 mixers",
+      "file_type": "rationale",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L70",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_core",
+      "label": "validate_core.py",
+      "file_type": "code",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_core_fail",
+      "label": "_fail()",
+      "file_type": "code",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_core_gate_equivalence",
+      "label": "gate_equivalence()",
+      "file_type": "code",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L37",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_core_gate_stability",
+      "label": "gate_stability()",
+      "file_type": "code",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L64",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_core_gate_shapes",
+      "label": "gate_shapes()",
+      "file_type": "code",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L91",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity",
+      "label": "validate_parity.py",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity_paritynet",
+      "label": "ParityNet",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L35",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity_paritynet_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L36",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity_paritynet_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L42",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity_batch",
+      "label": "batch()",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L48",
+      "_origin": "ast"
+    },
+    {
+      "id": "scripts_validate_parity_run",
+      "label": "run()",
+      "file_type": "code",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L54",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_init",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss",
+      "label": "mamba3_odss.py",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_droppath",
+      "label": "DropPath",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L30",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_droppath_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_droppath_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L35",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_blocks_mamba3_odss_py_tensor",
+      "label": "Tensor",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L35",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_lsblock",
+      "label": "LSBlock",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L44",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_lsblock_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L45",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_lsblock_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L52",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rgblock",
+      "label": "RGBlock",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L58",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rgblock_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L59",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rgblock_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L69",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d",
+      "label": "Mamba3SS2D",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L76",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L79",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_uses_official_kernel",
+      "label": ".uses_official_kernel()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L103",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_scan",
+      "label": "._scan()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L106",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "label": "._four_dir_scan()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L110",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L124",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3ss2d_spatial_saliency",
+      "label": ".spatial_saliency()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L133",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odssblock",
+      "label": "Mamba3ODSSBlock",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L154",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odssblock_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L155",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odssblock_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L168",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_build_mamba3_odss",
+      "label": "build_mamba3_odss()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L177",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_blocks_mamba3_odss_py_module",
+      "label": "Module",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L177",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odss",
+      "label": "Mamba3ODSS",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L185",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odss_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L191",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_mamba3odss_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L199",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rationale_1",
+      "label": "Mamba3ODSSBlock -- omni-directional selective scan block built on the verified p",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rationale_77",
+      "label": "4-directional selective scan over a feature map, driven by the Mamba-3 SSM.",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L77",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rationale_134",
+      "label": "Intrinsic controllability-Gramian saliency map for this block. (B,H,W).",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L134",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_odss_rationale_186",
+      "label": "Ultralytics-compatible wrapper (c1, c2, n, ...) so a YOLO yaml can reference",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L186",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref",
+      "label": "mamba3_ref.py",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rope",
+      "label": "_rope()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_blocks_mamba3_ref_py_tensor",
+      "label": "Tensor",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_causal_decay",
+      "label": "_causal_decay()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L82",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm",
+      "label": "Mamba3RefSSM",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L95",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L101",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "label": "._rotate()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "label": "._coeffs()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L165",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L177",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_shift",
+      "label": "._shift()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L201",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "label": "._ssd()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "label": "._ssm_reference()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "label": "._scan_scalar()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L283",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "label": "._reverse_energy()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L304",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "label": ".token_saliency()",
+      "file_type": "code",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L319",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_1",
+      "label": "Faithful pure-PyTorch reference for the Mamba-3 selective SSM.  Implements the a",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_71",
+      "label": "Rotate the state dimension of v in 2-D blocks by angles phi.      v:   (..., N)",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L71",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_83",
+      "label": "D[b,c,t,s,h] = exp(cs_t - cs_s) for s <= t, else 0.   cs: (B, nc, chunk, H).",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L83",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_96",
+      "label": "Selective SSM with exponential-trapezoidal discretization + complex (RoPE) state",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L96",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_166",
+      "label": "dt/lambda/A -> (log_alpha, gamma, beta). beta is None for the Euler ablation.",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L166",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_202",
+      "label": "x_{t-1} along dim 1, zero-filled at t=0. t: (B, L, ...) with 2 trailing dims.",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L202",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_208",
+      "label": "Chunked segment-sum scan. Mathematically identical to _ssm_reference.          l",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L208",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_268",
+      "label": "Sequential O(L) ground truth. Correct and honest, not fast.",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L268",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_284",
+      "label": "h_j = exp(log_a_j) * h_{j-1} + u_j, vectorised. Both (B, L, H) -> (B, L, H).",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L284",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_305",
+      "label": "G_tau = sum_{t>=tau} (prod_{k=tau+1..t} alpha_k)^2, i.e. the stable reverse",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L305",
+      "_origin": "ast"
+    },
+    {
+      "id": "blocks_mamba3_ref_rationale_320",
+      "label": "Intrinsic controllability-energy saliency per input token. Returns (B, L).",
+      "file_type": "rationale",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L320",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss",
+      "label": "yolo_loss.py",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_bbox_iou",
+      "label": "bbox_iou()",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_losses_yolo_loss_py_tensor",
+      "label": "Tensor",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_yololoss",
+      "label": "YOLOLoss",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L51",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_yololoss_init",
+      "label": ".__init__()",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L59",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_yololoss_forward",
+      "label": ".forward()",
+      "file_type": "code",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L72",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_rationale_1",
+      "label": "Real YOLO-style detection loss for Mamba3Yolo.  Simplified but usable: - DFL",
+      "file_type": "rationale",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_rationale_21",
+      "label": "IoU / CIoU between box1 (N,4) and box2 (M,4) or broadcast.",
+      "file_type": "rationale",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L21",
+      "_origin": "ast"
+    },
+    {
+      "id": "losses_yolo_loss_rationale_52",
+      "label": "Practical YOLO loss for the multi-scale raw outputs of Mamba3Yolo.      preds:",
+      "file_type": "rationale",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L52",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_init",
+      "label": "__init__.py",
+      "file_type": "code",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_gramian",
+      "label": "gramian.py",
+      "file_type": "code",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_gramian_norm",
+      "label": "_norm()",
+      "file_type": "code",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_xai_gramian_py_tensor",
+      "label": "Tensor",
+      "file_type": "code",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L31",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_gramian_gramian_saliency",
+      "label": "gramian_saliency()",
+      "file_type": "code",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "src_xai_gramian_py_module",
+      "label": "Module",
+      "file_type": "code",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_gramian_rationale_1",
+      "label": "Intrinsic controllability-Gramian explainability for Mamba3Yolo.  Unlike Grad-CA",
+      "file_type": "rationale",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L1",
+      "_origin": "ast"
+    },
+    {
+      "id": "xai_gramian_rationale_42",
+      "label": "Aggregate intrinsic saliency over every Mamba3SS2D block. Returns (B, H, W).",
+      "file_type": "rationale",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L42",
+      "_origin": "ast"
+    }
+  ],
+  "edges": [
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "ultralytics_nn_tasks",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "ultralytics_nn_modules",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "src_blocks_mamba3_odss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "scripts_build_yolo11_mamba3_swap_mixers",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_swap_mixers",
+      "target": "scripts_build_yolo11_mamba3_py_module",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "target": "detectionmodel",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "target": "detectionmodel",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "target": "scripts_build_yolo11_mamba3_swap_mixers",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_rationale_34",
+      "target": "scripts_build_yolo11_mamba3_swap_mixers",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L34",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_rationale_63",
+      "target": "scripts_build_yolo11_mamba3_build_yolo11_mamba3",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook",
+      "target": "json",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L9",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L10",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook",
+      "target": "scripts_make_kaggle_notebook_md",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook",
+      "target": "scripts_make_kaggle_notebook_code",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook",
+      "target": "scripts_make_kaggle_notebook_writefile",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_make_kaggle_notebook_writefile",
+      "target": "scripts_make_kaggle_notebook_code",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/make_kaggle_notebook.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "argparse",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "time",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "json",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "typing",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "numpy",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "scripts_measure_latency_measure_pytorch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency_measure_pytorch",
+      "target": "scripts_measure_latency_py_module",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "scripts_measure_latency_measure_onnx",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency",
+      "target": "scripts_measure_latency_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L138",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency_main",
+      "target": "scripts_measure_latency_measure_pytorch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_measure_latency_main",
+      "target": "scripts_measure_latency_measure_onnx",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/measure_latency.py",
+      "source_location": "L175",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "argparse",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "time",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "typing",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "torch_utils_data",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "torch_amp",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "torch_optim",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L33",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "src_models_mamba3yolo",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "src_blocks_mamba3_odss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_yolofolderdataset",
+      "target": "dataset",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_yolofolderdataset",
+      "target": "scripts_train_yolofolderdataset_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_yolofolderdataset",
+      "target": "scripts_train_yolofolderdataset_len",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_yolofolderdataset",
+      "target": "scripts_train_yolofolderdataset_getitem",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L66",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "scripts_train_collate_fn",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L94",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "scripts_train_simpledetectionloss",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_simpledetectionloss",
+      "target": "scripts_train_simpledetectionloss_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L111",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_simpledetectionloss",
+      "target": "scripts_train_simpledetectionloss_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L115",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "scripts_train_train_one_epoch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L125",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train",
+      "target": "scripts_train_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L152",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_main",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L184",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_main",
+      "target": "scripts_train_simpledetectionloss",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_main",
+      "target": "scripts_train_train_one_epoch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L198",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_rationale_41",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train.py",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "argparse",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "json",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "time",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "torch_utils_data",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "torch_optim",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "src_models_mamba3yolo",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "src_blocks_mamba3_odss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "src_losses_yolo_loss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "src_metrics_map_eval",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train_eval_syntheticblobdataset",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "dataset",
+      "relation": "inherits",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "scripts_train_eval_syntheticblobdataset_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "scripts_train_eval_syntheticblobdataset_len",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "scripts_train_eval_syntheticblobdataset_getitem",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train_eval_evaluate",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train_eval_main",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_main",
+      "target": "scripts_train_eval_syntheticblobdataset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_main",
+      "target": "scripts_train_eval_evaluate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_rationale_36",
+      "target": "scripts_train_eval_syntheticblobdataset",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "inspect",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "scripts_ultra_mamba3_register",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "scripts_ultra_mamba3_make_yaml",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L67",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L112",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "ultralytics",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L113",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3_rationale_38",
+      "target": "scripts_ultra_mamba3_register",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L38",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3_rationale_70",
+      "target": "scripts_ultra_mamba3_make_yaml",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L19",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L23",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "scripts_validate_core_fail",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "scripts_validate_core_gate_equivalence",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L37",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "scripts_validate_core_gate_stability",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "scripts_validate_core_gate_shapes",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L91",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_equivalence",
+      "target": "scripts_validate_core_fail",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L61",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_stability",
+      "target": "scripts_validate_core_fail",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L88",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_shapes",
+      "target": "scripts_validate_core_fail",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L99",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "os",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "scripts_validate_parity_paritynet",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity_paritynet",
+      "target": "scripts_validate_parity_paritynet_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L36",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity_paritynet",
+      "target": "scripts_validate_parity_paritynet_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "scripts_validate_parity_batch",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L48",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "scripts_validate_parity_run",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L54",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity_run",
+      "target": "scripts_validate_parity_paritynet",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L56",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity_run",
+      "target": "scripts_validate_parity_batch",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "torch_utils_checkpoint",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "torch",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "mamba_ssm_modules_mamba3",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_droppath",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath",
+      "target": "blocks_mamba3_odss_droppath_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath",
+      "target": "blocks_mamba3_odss_droppath_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L35",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_lsblock",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L44",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock",
+      "target": "blocks_mamba3_odss_lsblock_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L45",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock",
+      "target": "blocks_mamba3_odss_lsblock_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_rgblock",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L58",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock",
+      "target": "blocks_mamba3_odss_rgblock_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock",
+      "target": "blocks_mamba3_odss_rgblock_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L76",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L79",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_uses_official_kernel",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L103",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_scan",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_scan",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_scan",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L106",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L110",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L124",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_odss_mamba3ss2d_spatial_saliency",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_spatial_saliency",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_spatial_saliency",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L133",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L154",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock",
+      "target": "blocks_mamba3_odss_mamba3odssblock_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L155",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock",
+      "target": "blocks_mamba3_odss_mamba3odssblock_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L168",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_build_mamba3_odss",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_build_mamba3_odss",
+      "target": "src_blocks_mamba3_odss_py_module",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_odss_mamba3odss",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L185",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L191",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss",
+      "target": "blocks_mamba3_odss_mamba3odss_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss_forward",
+      "target": "src_blocks_mamba3_odss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L199",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath_init",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock_init",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L46",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock_init",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_init",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_init",
+      "target": "blocks_mamba3_odss_droppath",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L85",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "target": "blocks_mamba3_odss_mamba3ss2d_scan",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L117",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_forward",
+      "target": "blocks_mamba3_odss_mamba3ss2d_four_dir_scan",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_init",
+      "target": "blocks_mamba3_odss_mamba3odss_init",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L158",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_init",
+      "target": "blocks_mamba3_odss_lsblock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L161",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_init",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L162",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock_init",
+      "target": "blocks_mamba3_odss_rgblock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_build_mamba3_odss",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L181",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss_init",
+      "target": "blocks_mamba3_odss_build_mamba3_odss",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L195",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rationale_1",
+      "target": "blocks_mamba3_odss",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rationale_77",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L77",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rationale_134",
+      "target": "blocks_mamba3_odss_mamba3ss2d_spatial_saliency",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L134",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_rationale_186",
+      "target": "blocks_mamba3_odss_mamba3odss",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L186",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "math",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "typing",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L60",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L62",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L63",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "torch_nn_functional",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L64",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "torch",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L65",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "blocks_mamba3_ref_rope",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rope",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rope",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rope",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L70",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "blocks_mamba3_ref_causal_decay",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_causal_decay",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_causal_decay",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L82",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L95",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L153",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L165",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_forward",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_forward",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L177",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_shift",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_shift",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_shift",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L201",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L206",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L266",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L283",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L304",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L304",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L304",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm",
+      "target": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "target": "src_blocks_mamba3_ref_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L319",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "target": "blocks_mamba3_ref_rope",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L163",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_forward",
+      "target": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L189",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_forward",
+      "target": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L190",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "blocks_mamba3_ref_mamba3refssm_shift",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L220",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "target": "blocks_mamba3_ref_causal_decay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L240",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "target": "blocks_mamba3_ref_mamba3refssm_shift",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L272",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "target": "blocks_mamba3_ref_causal_decay",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L293",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "target": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L314",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "target": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L333",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "target": "blocks_mamba3_ref_mamba3refssm_rotate",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L335",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "target": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L337",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_1",
+      "target": "blocks_mamba3_ref",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_71",
+      "target": "blocks_mamba3_ref_rope",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L71",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_83",
+      "target": "blocks_mamba3_ref_causal_decay",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L83",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_96",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_166",
+      "target": "blocks_mamba3_ref_mamba3refssm_coeffs",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L166",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_202",
+      "target": "blocks_mamba3_ref_mamba3refssm_shift",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L202",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_208",
+      "target": "blocks_mamba3_ref_mamba3refssm_ssd",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L208",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_268",
+      "target": "blocks_mamba3_ref_mamba3refssm_ssm_reference",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L268",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_284",
+      "target": "blocks_mamba3_ref_mamba3refssm_scan_scalar",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L284",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_305",
+      "target": "blocks_mamba3_ref_mamba3refssm_reverse_energy",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L305",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_ref_rationale_320",
+      "target": "blocks_mamba3_ref_mamba3refssm_token_saliency",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_ref.py",
+      "source_location": "L320",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "typing",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L13",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L14",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "torch_nn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L15",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "torch_nn_functional",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L16",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "torch",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "losses_yolo_loss_bbox_iou",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_bbox_iou",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_bbox_iou",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_bbox_iou",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L20",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss",
+      "target": "losses_yolo_loss_yololoss",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L51",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss",
+      "target": "losses_yolo_loss_yololoss_init",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L59",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss",
+      "target": "losses_yolo_loss_yololoss_forward",
+      "relation": "method",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss_forward",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "generic_arg",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss_forward",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss_forward",
+      "target": "src_losses_yolo_loss_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L72",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_yololoss_forward",
+      "target": "losses_yolo_loss_bbox_iou",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L129",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_rationale_1",
+      "target": "losses_yolo_loss",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_rationale_21",
+      "target": "losses_yolo_loss_bbox_iou",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L21",
+      "weight": 1.0
+    },
+    {
+      "source": "losses_yolo_loss_rationale_52",
+      "target": "losses_yolo_loss_yololoss",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/losses/yolo_loss.py",
+      "source_location": "L52",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_init",
+      "target": "xai_gramian",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_init",
+      "target": "c_xampp_htdocs_mamba3yolo_src_xai_gradcam_py",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "sys",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L17",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "pathlib",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L18",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "typing",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L22",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "torch",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L24",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "torch_nn_functional",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "torch",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L26",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "src_blocks_mamba3_odss",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "xai_gramian_norm",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_norm",
+      "target": "src_xai_gramian_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_norm",
+      "target": "src_xai_gramian_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L31",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "xai_gramian_gramian_saliency",
+      "relation": "contains",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_gramian_saliency",
+      "target": "src_xai_gramian_py_module",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_gramian_saliency",
+      "target": "src_xai_gramian_py_tensor",
+      "relation": "references",
+      "context": "parameter_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_gramian_saliency",
+      "target": "src_xai_gramian_py_tensor",
+      "relation": "references",
+      "context": "return_type",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L40",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "src_blocks_mamba3_ref",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "scripts_ultra_mamba3",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "ultralytics",
+      "relation": "imports_from",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L108",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_gramian_saliency",
+      "target": "xai_gramian_norm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L68",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_rationale_1",
+      "target": "xai_gramian",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian_rationale_42",
+      "target": "xai_gramian_gramian_saliency",
+      "relation": "rationale_for",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_ref",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_init",
+      "target": "xai_gramian",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_init",
+      "target": "c_xampp_htdocs_mamba3yolo_src_xai_gradcam_py",
+      "relation": "re_exports",
+      "context": "export",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "blocks_mamba3_odss_build_mamba3_odss",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L29",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "losses_yolo_loss_yololoss",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L30",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval",
+      "target": "scripts_train_collate_fn",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "blocks_mamba3_odss_mamba3odss",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L41",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_ultra_mamba3",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/ultra_mamba3.py",
+      "source_location": "L114",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L25",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_parity",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L32",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_mamba3odss",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_lsblock",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_rgblock",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_odss_build_mamba3_odss",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "src_init",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/__init__.py",
+      "source_location": "L2",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_init",
+      "target": "xai_gramian_gramian_saliency",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/__init__.py",
+      "source_location": "L1",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L28",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L75",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "scripts_ultra_mamba3_register",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "xai_gramian",
+      "target": "scripts_ultra_mamba3_make_yaml",
+      "relation": "imports",
+      "context": "import",
+      "confidence": "EXTRACTED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L107",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_swap_mixers",
+      "target": "blocks_mamba3_odss_build_mamba3_odss",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L47",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_main",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L96",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_train_eval_main",
+      "target": "losses_yolo_loss_yololoss",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L101",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_equivalence",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L42",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_stability",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L69",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_validate_core_gate_shapes",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "source_file": "scripts/validate_core.py",
+      "source_location": "L93",
+      "weight": 1.0
+    },
+    {
+      "source": "scripts_build_yolo11_mamba3_py_module",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L29",
+      "weight": 0.8
+    },
+    {
+      "source": "detectionmodel",
+      "target": "blocks_mamba3_odss_mamba3odssblock",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/build_yolo11_mamba3.py",
+      "source_location": "L29",
+      "weight": 0.8
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L29",
+      "weight": 0.8
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "losses_yolo_loss_yololoss",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L30",
+      "weight": 0.8
+    },
+    {
+      "source": "scripts_train_eval_syntheticblobdataset",
+      "target": "scripts_train_yolofolderdataset",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/train_eval.py",
+      "source_location": "L32",
+      "weight": 0.8
+    },
+    {
+      "source": "scripts_validate_parity_paritynet",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L32",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_droppath",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "src_blocks_mamba3_odss_py_tensor",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_lsblock",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_rgblock",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odssblock",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "src_blocks_mamba3_odss_py_module",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3odss",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L27",
+      "weight": 0.8
+    },
+    {
+      "source": "src_xai_gramian_py_tensor",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L28",
+      "weight": 0.8
+    },
+    {
+      "source": "src_xai_gramian_py_module",
+      "target": "blocks_mamba3_odss_mamba3ss2d",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L28",
+      "weight": 0.8
+    },
+    {
+      "source": "src_xai_gramian_py_tensor",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L75",
+      "weight": 0.8
+    },
+    {
+      "source": "src_xai_gramian_py_module",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "uses",
+      "confidence": "INFERRED",
+      "source_file": "src/xai/gramian.py",
+      "source_location": "L75",
+      "weight": 0.8
+    },
+    {
+      "source": "scripts_validate_parity_paritynet_init",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "scripts/validate_parity.py",
+      "source_location": "L39",
+      "weight": 1.0
+    },
+    {
+      "source": "blocks_mamba3_odss_mamba3ss2d_init",
+      "target": "blocks_mamba3_ref_mamba3refssm",
+      "relation": "calls",
+      "context": "call",
+      "confidence": "EXTRACTED",
+      "confidence_score": 1.0,
+      "source_file": "src/blocks/mamba3_odss.py",
+      "source_location": "L99",
+      "weight": 1.0
+    }
+  ],
+  "input_tokens": 0,
+  "output_tokens": 0
+}

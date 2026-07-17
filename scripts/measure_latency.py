@@ -157,13 +157,24 @@ def main():
         from src.models.mamba3yolo import build_mamba3yolo
 
         ckpt = torch.load(args.weights, map_location="cpu")
-        cfg = ckpt.get("cfg", {})
-        model = build_mamba3yolo(
-            cfg.get("scale", "T"),
-            nc=cfg.get("nc", 80),
-            is_mimo=cfg.get("is_mimo", True),
-        )
-        model.load_state_dict(ckpt["model"])
+        
+        if "model" in ckpt and hasattr(ckpt["model"], "names"):
+            # It's an Ultralytics YOLO checkpoint
+            print(f"Detected Ultralytics checkpoint: {args.weights}")
+            from ultralytics import YOLO
+            import scripts.ultra_mamba3 as ultra_mamba3
+            ultra_mamba3.register(verbose=False)
+            model = YOLO(args.weights).model
+        else:
+            # It's a custom standalone checkpoint
+            cfg = ckpt.get("cfg", {})
+            model = build_mamba3yolo(
+                cfg.get("scale", "T"),
+                nc=cfg.get("nc", 80),
+                is_mimo=cfg.get("is_mimo", True),
+            )
+            model.load_state_dict(ckpt.get("model", ckpt))
+            
         print(f"Loaded {args.weights}")
         r = measure_pytorch(
             model, args.imgsz, args.batch, args.warmup, args.iters, args.device, args.amp

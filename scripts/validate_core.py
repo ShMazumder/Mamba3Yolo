@@ -47,10 +47,15 @@ def gate_equivalence():
                 m.dt_proj.bias.fill_(0.5)
             x = torch.randn(3, 37, 32, device=DEV)      # L not a multiple of chunk
             with torch.no_grad():
-                uf = m.norm(m.in_proj(x).chunk(2, -1)[0]).float()
-                la, ga, be = m._coeffs(uf)
-                Br, Cr = m._rotate(uf, m.B_proj(uf), m.C_proj(uf))
-                uh = uf.view(3, 37, m.nheads, m.headdim)
+                u = m.norm(m.in_proj(x).chunk(2, -1)[0])
+                dt_val = m.dt_proj(u)
+                lam_val = m.lam_proj(u) if m.trapezoidal else None
+                B_val = m.B_proj(u)
+                C_val = m.C_proj(u)
+                w_val = m.w_proj(u) if m.use_rope else None
+                la, ga, be = m._coeffs(dt_val, lam_val)
+                Br, Cr = m._rotate(w_val, B_val, C_val)
+                uh = u.float().view(3, 37, m.nheads, m.headdim)
                 y_fast = m._ssd(la, ga, be, uh, Br, Cr)
                 y_ref = m._ssm_reference(la, ga, be, uh, Br, Cr)
             err = (y_fast - y_ref).abs().max().item()

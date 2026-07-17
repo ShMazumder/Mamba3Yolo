@@ -53,15 +53,27 @@ def _finite_grads(m):
                for p in m.parameters() if p.grad is not None)
 
 
-def run_config(dim, hw, checkpoint, amp, trapezoidal, rope, steps=2, seed=0):
+def run_config(dim, hw, checkpoint, amp, trapezoidal, rope, steps=5, lr=1e-2, seed=0):
     """Drive the real 4-dir block at feature-map size hw x hw for `steps` optimizer
-    steps. Returns (survived, first_bad_step, detail)."""
+    steps. Returns (survived, first_bad_step, detail).
+
+    lr is deliberately aggressive (1e-2) and dt_proj.bias is pre-nudged the way
+    `warmup_bias_lr=0.1` would after a few real steps -- the run log shows the block
+    is fine at epoch 1 and NaN at epoch 2, i.e. it is the WEIGHT MOVEMENT that
+    detonates, not the initial forward. A gate that never steps the optimizer hard
+    cannot see it (that is why validate_core, which only forward/backwards once at
+    L<=1024, stays green)."""
     torch.manual_seed(seed)
     block = Mamba3SS2D(dim=dim, d_state=32, expand=1, headdim=min(64, dim),
                        use_rope=rope, trapezoidal=trapezoidal).to(DEV)
+    # Push dt_proj.bias toward the large-softplus regime the warmup lr walks it into.
+    ref = getattr(block, "ref", None)
+    if ref is not None:
+        with torch.no_grad():
+            ref.dt_proj.bias.add_(1.0)
     # Mirror the real ODSS block: recompute the scan in backward.
     import torch.utils.checkpoint as _ckpt
-    opt = torch.optim.AdamW(block.parameters(), lr=2e-3)
+    opt = torch.optim.AdamW(block.parameters(), lr=lr)
     scaler = torch.amp.GradScaler(DEV, enabled=amp and DEV == "cuda")
 
     for step in range(steps):
@@ -94,7 +106,12 @@ def run_config(dim, hw, checkpoint, amp, trapezoidal, rope, steps=2, seed=0):
 def gate():
     # L = hw*hw. 64 -> 4096 tokens (the stride-4 block at 256px). 96 -> 9216 (192px-ish).
     sizes = [(64, 64), (128, 96)]      # (channels, feature-map side)
-    print(f"[train-stability] device={DEV}  (real Mamba3SS2D, 2 optimizer steps)\n")
+    print(f"[train-stability] device={DEV}  (real Mamba3SS2D, 5 aggressive-lr steps)")
+    if DEV != "cuda":
+        print("  NOTE: CPU run -- AMP fp16 is disabled, so amp=True rows are fp32 here.")
+        print("        The training NaN is fp16 overflow; this gate only bites on GPU.\n")
+    else:
+        print()
     header = f"  {'dim':>4} {'L':>6} {'ckpt':>5} {'amp':>4} {'trap':>5} {'rope':>5}  result"
     print(header)
     for dim, hw in sizes:
